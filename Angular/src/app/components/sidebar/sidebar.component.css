@@ -1,0 +1,145 @@
+:host {
+  display: block;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1200;
+}
+
+.sidebar-container {
+  height: 100%;
+  width: 70px; /* Collapsed width */
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--glass-border);
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s cubic-bezier(0.4, 0.0, 0.2, 1), background 0.3s, border-color 0.3s;
+  overflow: hidden;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-container.expanded {
+  width: 240px;
+}
+
+/* Logo Section */
+.logo-section {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  color: #4f46e5;
+  border-bottom: 1px solid var(--glass-border);
+  white-space: nowrap;
+}
+
+.logo-icon {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+}
+
+.app-name {
+  margin-left: 15px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  opacity: 0;
+  animation: fadeIn 0.3s forwards 0.1s;
+}
+
+/* Menu List */
+.menu-list {
+  flex: 1;
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  height: 48px;
+}
+
+.menu-item:hover {
+  background-color: var(--card-hover-bg);
+  color: var(--text-primary);
+}
+
+.menu-item.active {
+  background-color: rgba(79, 70, 229, 0.1); /* Keep brand tint or use var */
+  color: #4f46e5;
+}
+
+.menu-item mat-icon {
+  margin-right: 15px; /* Fixed margin for icon */
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  min-width: 24px; /* Ensure icon doesn't shrink */
+}
+
+.menu-item .label {
+  font-weight: 500;
+  font-size: 0.95rem;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards 0.1s;
+}
+
+/* Footer / User Profile */
+.footer-section {
+  padding: 20px;
+  border-top: 1px solid var(--glass-border);
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  background: var(--glass-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-secondary);
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards 0.1s;
+}
+
+.user-info .name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.user-info .role {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}

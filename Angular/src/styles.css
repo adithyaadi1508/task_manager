@@ -15,6 +15,7 @@
   --accent-gradient: linear-gradient(135deg, #6366f1, #a855f7);
   --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   --card-hover-bg: rgba(255, 255, 255, 0.06);
+  --bg-sidebar: #1e293b; /* Solid Dark Sidebar */
   --bg-page-gradient: radial-gradient(at 0% 0%, #1e293b 0px, transparent 50%), 
                       radial-gradient(at 100% 0%, #312e81 0px, transparent 50%), 
                       #0f172a;
@@ -24,6 +25,7 @@
   /* Light Theme Variables */
   --bg-page: #f8fafc;
   --bg-surface: rgba(255, 255, 255, 0.8);
+  --bg-sidebar: #ffffff; /* Solid Light Sidebar */
   --text-primary: #0f172a;
   --text-secondary: #475569;
   --text-tertiary: #94a3b8;

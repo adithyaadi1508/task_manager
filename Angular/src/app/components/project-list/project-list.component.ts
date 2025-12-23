@@ -55,7 +55,7 @@ export class ProjectListComponent implements OnInit {
   selectedPriority: string = 'ALL';
 
   statuses = ['ALL', 'PLANNING', 'ACTIVE', 'ON_HOLD', 'COMPLETED', 'CANCELLED'];
-  priorities = ['ALL', 'LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
+  priorities = ['ALL', 'LOW', 'MEDIUM', 'HIGH', 'URGENT'];
 
   constructor(
     private projectService: ProjectService,

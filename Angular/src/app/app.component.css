@@ -1,0 +1,14 @@
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+  transition: margin-left 0.3s ease;
+}
+
+.main-content.with-sidebar {
+  margin-left: 70px; /* Match sidebar collapsed width */
+}

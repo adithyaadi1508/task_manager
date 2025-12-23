@@ -5,7 +5,7 @@ export interface Project {
   startDate: string;
   endDate?: string;
   status: 'PLANNING' | 'ACTIVE' | 'ON_HOLD' | 'COMPLETED' | 'CANCELLED';
-  priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+  priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT';
   budget?: number;
   progress?: number;
   owner?: {

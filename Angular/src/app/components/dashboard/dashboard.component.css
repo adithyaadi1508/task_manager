@@ -1,47 +1,11 @@
 :host {
   display: block;
   min-height: 100vh;
-  background: #f8fafc;
+  background: var(--bg-page);
+  color: var(--text-primary);
 }
 
-/* Toolbar */
-mat-toolbar {
-  background: linear-gradient(135deg, #4f46e5, #3b82f6);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 0 24px;
-  height: 70px;
-}
-
-mat-toolbar span {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: white;
-}
-
-.spacer { flex: 1 1 auto; }
-
-.username {
-  margin-right: 20px;
-  padding: 8px 16px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  color: rgba(255, 255, 255, 0.95);
-}
-
-button[mat-button] {
-  color: white;
-  border-radius: 20px;
-  padding: 8px 20px;
-  transition: background 0.3s ease;
-}
-
-button[mat-button]:hover {
-  background: rgba(255, 255, 255, 0.15);
-}
-
-button[mat-button] mat-icon {
-  margin-right: 8px;
-}
+/* Toolbar - handled by app-navbar now, but keeping clean just in case */
 
 /* Dashboard */
 .dashboard-container {
@@ -59,7 +23,7 @@ button[mat-button] mat-icon {
 h2 {
   text-align: center;
   margin-bottom: 50px;
-  color: #1e293b;
+  color: var(--text-primary);
   font-size: 2.2rem;
   font-weight: 700;
   position: relative;
@@ -74,7 +38,7 @@ h2::after {
   transform: translateX(-50%);
   width: 60px;
   height: 4px;
-  background: #3b82f6;
+  background: #3b82f6; /* Brand color, OK to keep or use var(--primary) if exists */
   border-radius: 2px;
 }
 
@@ -90,8 +54,8 @@ h2::after {
   text-align: center;
   padding: 30px 20px;
   border-radius: 16px;
-  background: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-sm);
   border-top: 4px solid;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -99,7 +63,8 @@ h2::after {
 
 .stat-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12); /* Could tokenize this too but ok for now */
+  background: var(--card-hover-bg);
 }
 
 .stat-card.total { border-color: #4f46e5; }
@@ -146,12 +111,12 @@ h2::after {
 .stat-card h3 {
   font-size: 36px;
   margin: 10px 0;
-  color: #1e293b;
+  color: var(--text-primary);
   font-weight: 700;
 }
 
 .stat-card p {
-  color: #64748b;
+  color: var(--text-secondary);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 1px;

@@ -1,21 +1,11 @@
-<!-- <mat-toolbar color="primary">
-  <span>Task Manager Dashboard</span>
-  <span class="spacer"></span>
-  <span class="username">Welcome, {{ username }}!</span>
-  <button mat-button (click)="logout()">
-    <mat-icon>logout</mat-icon> Logout
-  </button>
-</mat-toolbar> -->
-<app-navbar 
-  title="Task Manager Dashboard" 
-  [username]="username">
+<app-navbar title="Task Manager Dashboard" [username]="username">
 </app-navbar>
 
 <div class="dashboard-container">
   <h2>Overview</h2>
-  
+
   <app-loading-spinner *ngIf="loading"></app-loading-spinner>
-  
+
   <div class="stats-grid" *ngIf="!loading">
     <mat-card class="stat-card total">
       <mat-card-content>
@@ -50,12 +40,4 @@
     </mat-card>
   </div>
 
-  <div class="actions" *ngIf="!loading">
-    <button mat-raised-button color="primary" (click)="navigateToProjects()">
-      <mat-icon>work</mat-icon> View Projects
-    </button>
-    <button mat-raised-button color="accent" (click)="navigateToTasks()">
-      <mat-icon>list</mat-icon> View All Tasks
-    </button>
-  </div>
 </div>

@@ -5,10 +5,8 @@
   justify-content: space-between;
   height: 70px;
   padding: 0 24px;
-  background: var(--bg-surface);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--glass-border-strong);
+  background: var(--bg-sidebar);
+  border-bottom: 1px solid var(--glass-border);
   box-shadow: var(--shadow-sm);
   position: relative;
   z-index: 1000;

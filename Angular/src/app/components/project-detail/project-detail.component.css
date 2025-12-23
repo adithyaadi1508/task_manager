@@ -63,82 +63,117 @@ button[mat-raised-button] mat-icon {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
+/* Header Styles */
 mat-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 mat-card-title {
   font-size: 1.8rem;
-  font-weight: 600;
-  color: #1f2937;
+  font-weight: 700;
+  color: #111827;
   margin: 0;
+  letter-spacing: -0.5px;
 }
 
 .status-chips {
   display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+  gap: 8px;
 }
 
-mat-chip {
-  font-weight: 500;
-  font-size: 0.9rem;
-  height: 28px;
+mat-chip-option {
+  font-size: 0.85rem;
+  font-weight: 600;
+  min-height: 28px;
+}
+
+/* Force visible colors even when disabled */
+mat-chip-option[disabled] {
+  opacity: 1 !important;
+}
+
+mat-chip-option[disabled] ::ng-deep .mat-mdc-chip-action-label {
+  color: white !important;
+}
+
+
+/* Overview Layout - Two Columns */
+.overview-grid {
+  display: grid;
+  grid-template-columns: 3fr 1.2fr;
+  gap: 40px;
+  align-items: start;
+}
+
+/* Left Column - Description */
+.main-column h3 {
+  font-size: 1.1rem;
+  color: #374151;
+  margin: 0 0 15px 0;
+  font-weight: 600;
 }
 
 .description {
   color: #4b5563;
   font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 25px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #e5e7eb;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  margin: 0;
 }
 
-/* Project Info */
-.project-info {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin-bottom: 25px;
+/* Right Column - Sidebar Info */
+.sidebar-column {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #f3f4f6;
+}
+
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
 .info-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
-  padding: 12px;
-  background: #f9fafb;
-  border-radius: 8px;
 }
 
 .info-item mat-icon {
-  color: #6b7280;
-  font-size: 24px;
-  width: 24px;
-  height: 24px;
+  color: #9ca3af;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+}
+
+.info-text {
+  display: flex;
+  flex-direction: column;
 }
 
 .info-item .label {
-  display: block;
-  color: #6b7280;
-  font-size: 0.85rem;
+  color: #9ca3af;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   margin-bottom: 4px;
 }
 
 .info-item .value {
-  display: block;
   color: #1f2937;
-  font-weight: 500;
-  font-size: 1rem;
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
-/* Progress Section */
+/* Progress Section in Sidebar */
 .progress-section {
   margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px dashed #e5e7eb;
 }
 
 .progress-header {
@@ -146,22 +181,26 @@ mat-chip {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
-  font-weight: 500;
-  color: #374151;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #4b5563;
 }
 
 .progress-value {
-  color: #3b82f6;
-  font-weight: 600;
+  color: #4f46e5;
+  background: #eef2ff;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.8rem;
 }
 
-::ng-deep .mat-progress-bar {
-  height: 8px;
-  border-radius: 4px;
+::ng-deep .custom-progress {
+  height: 6px;
+  border-radius: 3px;
 }
 
-::ng-deep .mat-progress-bar-fill::after {
-  border-radius: 4px;
+::ng-deep .custom-progress .mat-progress-bar-fill::after {
+  background-color: #4f46e5;
 }
 
 /* Statistics Grid */
@@ -374,14 +413,9 @@ mat-chip {
     padding: 15px;
   }
   
-  mat-card-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
-  }
-  
-  .project-info {
+  .overview-grid {
     grid-template-columns: 1fr;
+    gap: 25px;
   }
   
   .stats-grid {

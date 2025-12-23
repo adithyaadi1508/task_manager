@@ -176,7 +176,7 @@ export class ProjectDetailComponent implements OnInit {
 
   getPriorityColor(priority: string): string {
     switch (priority) {
-      case 'CRITICAL': return '#d32f2f';
+      case 'URGENT': return '#d32f2f';
       case 'HIGH': return '#f44336';
       case 'MEDIUM': return '#ff9800';
       case 'LOW': return '#4caf50';

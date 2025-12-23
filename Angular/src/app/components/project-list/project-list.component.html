@@ -1,21 +1,6 @@
-<!-- <mat-toolbar color="primary">
-  <button mat-icon-button (click)="navigateToDashboard()">
-    <mat-icon>arrow_back</mat-icon>
-  </button>
-  <span>Projects</span>
-  <span class="spacer"></span>
-  <button mat-raised-button (click)="openProjectDialog()">
-    <mat-icon>add</mat-icon> New Project
-  </button>
-  <button mat-button (click)="logout()">
-    <mat-icon>logout</mat-icon> Logout
-  </button>
-</mat-toolbar> -->
 <app-navbar title="Projects" [showBackButton]="true" [showNewButton]="true" newButtonText="New Project"
   (backClick)="navigateToDashboard()" (newClick)="openProjectDialog()">
 </app-navbar>
-
-
 
 <div class="page-background">
   <div class="project-list-container">

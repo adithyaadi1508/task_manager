@@ -1,23 +1,4 @@
-<!-- <mat-toolbar color="primary">
-  <button mat-icon-button (click)="goBack()">
-    <mat-icon>arrow_back</mat-icon>
-  </button>
-  <span>{{ project?.name || 'Project Details' }}</span>
-  <span class="spacer"></span>
-  <button mat-button (click)="openEditDialog()" *ngIf="project">
-    <mat-icon>edit</mat-icon> Edit Project
-  </button>
-  <button mat-button (click)="logout()">
-    <mat-icon>logout</mat-icon> Logout
-  </button>
-  <button mat-raised-button color="primary" (click)="openTeamManagement()">
-  <mat-icon>person_add</mat-icon> Add Member
-</button>
-</mat-toolbar> -->
-<app-navbar 
-  [title]="project?.name || 'Project Details'"
-  [showBackButton]="true"
-  (backClick)="goBack()">
+<app-navbar [title]="project?.name || 'Project Details'" [showBackButton]="true" (backClick)="goBack()">
   <!-- For custom buttons like Edit and Add Member, keep them in the component -->
 </app-navbar>
 
@@ -25,60 +6,66 @@
   <!-- Project Overview -->
   <mat-card class="overview-card">
     <mat-card-header>
-      <mat-card-title>{{ project.name }}</mat-card-title>
       <div class="status-chips">
-        <mat-chip [style.background-color]="getStatusColor(project.status)" [style.color]="'white'">
+        <mat-chip-option [style.background-color]="getStatusColor(project.status)" [style.color]="'white'" disabled>
           {{ project.status.replace('_', ' ') }}
-        </mat-chip>
-        <mat-chip [style.background-color]="getPriorityColor(project.priority)" [style.color]="'white'">
+        </mat-chip-option>
+        <mat-chip-option [style.background-color]="getPriorityColor(project.priority)" [style.color]="'white'" disabled>
           {{ project.priority }} Priority
-        </mat-chip>
+        </mat-chip-option>
       </div>
     </mat-card-header>
 
-    <mat-card-content>
-      <p class="description">{{ project.description }}</p>
-
-      <div class="project-info">
-        <div class="info-item">
-          <mat-icon>event</mat-icon>
-          <div>
-            <span class="label">Start Date</span>
-            <span class="value">{{ project.startDate | date }}</span>
-          </div>
-        </div>
-
-        <div class="info-item" *ngIf="project.endDate">
-          <mat-icon>event_available</mat-icon>
-          <div>
-            <span class="label">End Date</span>
-            <span class="value">{{ project.endDate | date }}</span>
-          </div>
-        </div>
-
-        <div class="info-item" *ngIf="project.budget">
-          <mat-icon>account_balance_wallet</mat-icon>
-          <div>
-            <span class="label">Budget</span>
-            <span class="value">₹{{ project.budget | number }}</span>
-          </div>
-        </div>
-
-        <div class="info-item" *ngIf="project.owner">
-          <mat-icon>person</mat-icon>
-          <div>
-            <span class="label">Owner</span>
-            <span class="value">{{ project.owner.firstName }} {{ project.owner.lastName }}</span>
-          </div>
-        </div>
+    <mat-card-content class="overview-grid">
+      <!-- Left Column: Description -->
+      <div class="main-column">
+        <h3>About this Project</h3>
+        <p class="description">{{ project.description }}</p>
       </div>
 
-      <div class="progress-section" *ngIf="project.progress !== undefined">
-        <div class="progress-header">
-          <span>Overall Progress</span>
-          <span class="progress-value">{{ project.progress }}%</span>
+      <!-- Right Column: Quick Info & Progress -->
+      <div class="sidebar-column">
+        <div class="info-list">
+          <div class="info-item">
+            <mat-icon>event</mat-icon>
+            <div class="info-text">
+              <span class="label">Start Date</span>
+              <span class="value">{{ project.startDate | date:'mediumDate' }}</span>
+            </div>
+          </div>
+
+          <div class="info-item" *ngIf="project.endDate">
+            <mat-icon>event_available</mat-icon>
+            <div class="info-text">
+              <span class="label">Due Date</span>
+              <span class="value">{{ project.endDate | date:'mediumDate' }}</span>
+            </div>
+          </div>
+
+          <div class="info-item" *ngIf="project.budget">
+            <mat-icon>account_balance_wallet</mat-icon>
+            <div class="info-text">
+              <span class="label">Budget</span>
+              <span class="value">₹{{ project.budget | number }}</span>
+            </div>
+          </div>
+
+          <div class="info-item" *ngIf="project.owner">
+            <mat-icon>person</mat-icon>
+            <div class="info-text">
+              <span class="label">Owner</span>
+              <span class="value">{{ project.owner.firstName }} {{ project.owner.lastName }}</span>
+            </div>
+          </div>
         </div>
-        <mat-progress-bar mode="determinate" [value]="project.progress" color="primary"></mat-progress-bar>
+
+        <div class="progress-section" *ngIf="project.progress !== undefined">
+          <div class="progress-header">
+            <span>Completion</span>
+            <span class="progress-value">{{ project.progress }}%</span>
+          </div>
+          <mat-progress-bar mode="determinate" [value]="project.progress" class="custom-progress"></mat-progress-bar>
+        </div>
       </div>
     </mat-card-content>
   </mat-card>

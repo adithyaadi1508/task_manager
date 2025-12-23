@@ -37,7 +37,7 @@ export class ProjectFormComponent implements OnInit {
   isEditMode: boolean = false;
 
   statuses = ['PLANNING', 'ACTIVE', 'ON_HOLD', 'COMPLETED', 'CANCELLED'];
-  priorities = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
+  priorities = ['LOW', 'MEDIUM', 'HIGH', 'URGENT'];
 
   constructor(
     private fb: FormBuilder,
@@ -120,6 +120,6 @@ export class ProjectFormComponent implements OnInit {
     this.dialogRef.close(false);
   }
   formatLabel(value: number): string {
-  return `${value}%`;
-}
+    return `${value}%`;
+  }
 }
