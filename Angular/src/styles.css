@@ -1,0 +1,44 @@
+/* You can add global styles to this file, and also import other style files */
+
+:root {
+  /* Default Theme (Dark) Variables - Matching existing look */
+  --bg-page: #0f172a;
+  --bg-surface: rgba(30, 41, 59, 0.8);
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --glass-border-strong: rgba(255, 255, 255, 0.1);
+  --glass-shine: rgba(255, 255, 255, 0.1);
+  --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+  --accent-gradient: linear-gradient(135deg, #6366f1, #a855f7);
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --card-hover-bg: rgba(255, 255, 255, 0.06);
+  --bg-page-gradient: radial-gradient(at 0% 0%, #1e293b 0px, transparent 50%), 
+                      radial-gradient(at 100% 0%, #312e81 0px, transparent 50%), 
+                      #0f172a;
+}
+
+[data-theme="light"] {
+  /* Light Theme Variables */
+  --bg-page: #f8fafc;
+  --bg-surface: rgba(255, 255, 255, 0.8);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(226, 232, 240, 0.8);
+  --glass-border-strong: rgba(203, 213, 225, 1);
+  --glass-shine: rgba(255, 255, 255, 0.8);
+  --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%); /* Keep brand colors */
+  --accent-gradient: linear-gradient(135deg, #6366f1, #a855f7);
+  --shadow-sm: 0 4px 6px -1px rgba(148, 163, 184, 0.1);
+  --card-hover-bg: rgba(255, 255, 255, 0.9);
+  --bg-page-gradient: radial-gradient(at 0% 0%, #eff6ff 0px, transparent 50%), 
+                      radial-gradient(at 100% 0%, #e0e7ff 0px, transparent 50%), 
+                      #f8fafc;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg-page); color: var(--text-primary); transition: background 0.3s, color 0.3s; }

@@ -1,0 +1,37 @@
+<mat-toolbar class="glass-navbar">
+  <div class="nav-left">
+    <button mat-icon-button class="back-btn" *ngIf="showBackButton" (click)="onBackClick()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="brand-container">
+      <span class="app-title">{{ title }}</span>
+    </div>
+  </div>
+
+  <span class="spacer"></span>
+
+  <div class="nav-right">
+    <div class="user-badge" *ngIf="username">
+      <div class="avatar-circle">
+        {{ username.charAt(0) | uppercase }}
+      </div>
+      <span class="username-text">Hi, {{ username }}</span>
+    </div>
+
+    <div class="actions">
+      <button class="btn-create" *ngIf="showNewButton" (click)="onNewClick()">
+        <mat-icon>{{ newButtonIcon }}</mat-icon>
+        <span>{{ newButtonText }}</span>
+      </button>
+
+      <button mat-icon-button class="btn-theme" (click)="toggleTheme()">
+        <mat-icon>{{ themeService.currentTheme() === 'dark' ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      </button>
+
+      <button class="btn-logout" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>

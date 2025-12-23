@@ -1,0 +1,226 @@
+<!-- <mat-toolbar color="primary">
+  <button mat-icon-button (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span>{{ project?.name || 'Project Details' }}</span>
+  <span class="spacer"></span>
+  <button mat-button (click)="openEditDialog()" *ngIf="project">
+    <mat-icon>edit</mat-icon> Edit Project
+  </button>
+  <button mat-button (click)="logout()">
+    <mat-icon>logout</mat-icon> Logout
+  </button>
+  <button mat-raised-button color="primary" (click)="openTeamManagement()">
+  <mat-icon>person_add</mat-icon> Add Member
+</button>
+</mat-toolbar> -->
+<app-navbar 
+  [title]="project?.name || 'Project Details'"
+  [showBackButton]="true"
+  (backClick)="goBack()">
+  <!-- For custom buttons like Edit and Add Member, keep them in the component -->
+</app-navbar>
+
+<div class="project-detail-container" *ngIf="!loading && project">
+  <!-- Project Overview -->
+  <mat-card class="overview-card">
+    <mat-card-header>
+      <mat-card-title>{{ project.name }}</mat-card-title>
+      <div class="status-chips">
+        <mat-chip [style.background-color]="getStatusColor(project.status)" [style.color]="'white'">
+          {{ project.status.replace('_', ' ') }}
+        </mat-chip>
+        <mat-chip [style.background-color]="getPriorityColor(project.priority)" [style.color]="'white'">
+          {{ project.priority }} Priority
+        </mat-chip>
+      </div>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p class="description">{{ project.description }}</p>
+
+      <div class="project-info">
+        <div class="info-item">
+          <mat-icon>event</mat-icon>
+          <div>
+            <span class="label">Start Date</span>
+            <span class="value">{{ project.startDate | date }}</span>
+          </div>
+        </div>
+
+        <div class="info-item" *ngIf="project.endDate">
+          <mat-icon>event_available</mat-icon>
+          <div>
+            <span class="label">End Date</span>
+            <span class="value">{{ project.endDate | date }}</span>
+          </div>
+        </div>
+
+        <div class="info-item" *ngIf="project.budget">
+          <mat-icon>account_balance_wallet</mat-icon>
+          <div>
+            <span class="label">Budget</span>
+            <span class="value">₹{{ project.budget | number }}</span>
+          </div>
+        </div>
+
+        <div class="info-item" *ngIf="project.owner">
+          <mat-icon>person</mat-icon>
+          <div>
+            <span class="label">Owner</span>
+            <span class="value">{{ project.owner.firstName }} {{ project.owner.lastName }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="progress-section" *ngIf="project.progress !== undefined">
+        <div class="progress-header">
+          <span>Overall Progress</span>
+          <span class="progress-value">{{ project.progress }}%</span>
+        </div>
+        <mat-progress-bar mode="determinate" [value]="project.progress" color="primary"></mat-progress-bar>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Statistics -->
+  <div class="stats-grid" *ngIf="projectStats">
+    <mat-card class="stat-card">
+      <mat-icon class="stat-icon">assignment</mat-icon>
+      <h3>{{ projectStats.totalTasks }}</h3>
+      <p>Total Tasks</p>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-icon class="stat-icon completed">check_circle</mat-icon>
+      <h3>{{ projectStats.completedTasks }}</h3>
+      <p>Completed</p>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-icon class="stat-icon in-progress">autorenew</mat-icon>
+      <h3>{{ projectStats.inProgressTasks }}</h3>
+      <p>In Progress</p>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-icon class="stat-icon overdue">warning</mat-icon>
+      <h3>{{ projectStats.overdueTasks }}</h3>
+      <p>Overdue</p>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-icon class="stat-icon team">group</mat-icon>
+      <h3>{{ projectStats.teamMembers }}</h3>
+      <p>Team Members</p>
+    </mat-card>
+  </div>
+
+  <!-- Tabs for Tasks and Team -->
+  <mat-card class="content-card">
+    <mat-tab-group>
+      <!-- Tasks Tab -->
+      <mat-tab label="Tasks ({{ tasks.length }})">
+        <div class="tab-content">
+          <div class="tab-header">
+            <h3>Project Tasks</h3>
+            <button mat-raised-button color="primary" (click)="openTaskDialog()">
+              <mat-icon>add</mat-icon> Add Task
+            </button>
+          </div>
+
+          <table mat-table [dataSource]="tasks" class="tasks-table" *ngIf="tasks.length > 0">
+            <ng-container matColumnDef="title">
+              <th mat-header-cell *matHeaderCellDef>Title</th>
+              <td mat-cell *matCellDef="let task">{{ task.title }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Status</th>
+              <td mat-cell *matCellDef="let task">
+                <mat-chip [style.background-color]="getStatusColor(task.status)" [style.color]="'white'">
+                  {{ task.status.replace('_', ' ') }}
+                </mat-chip>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="priority">
+              <th mat-header-cell *matHeaderCellDef>Priority</th>
+              <td mat-cell *matCellDef="let task">
+                <mat-chip [style.background-color]="getPriorityColor(task.priority)" [style.color]="'white'">
+                  {{ task.priority }}
+                </mat-chip>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="assignedTo">
+              <th mat-header-cell *matHeaderCellDef>Assigned To</th>
+              <td mat-cell *matCellDef="let task">
+                {{ task.assignedTo ? task.assignedTo.firstName + ' ' + task.assignedTo.lastName : 'Unassigned' }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="dueDate">
+              <th mat-header-cell *matHeaderCellDef>Due Date</th>
+              <td mat-cell *matCellDef="let task">{{ task.dueDate | date }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td mat-cell *matCellDef="let task">
+                <button mat-icon-button color="primary" (click)="openTaskDialog(task)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="deleteTask(task.id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="taskColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: taskColumns;"></tr>
+          </table>
+
+          <div class="empty-state" *ngIf="tasks.length === 0">
+            <mat-icon>assignment</mat-icon>
+            <p>No tasks yet. Click "Add Task" to create one!</p>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Team Tab -->
+      <mat-tab label="Team ({{ teamMembers.length }})">
+        <div class="tab-content">
+          <div class="tab-header">
+            <h3>Team Members</h3>
+            <button mat-raised-button color="primary">
+              <mat-icon>person_add</mat-icon> Add Member
+            </button>
+          </div>
+
+          <div class="team-grid">
+            <mat-card *ngFor="let member of teamMembers" class="team-card">
+              <mat-card-content>
+                <div class="member-avatar">
+                  <mat-icon>account_circle</mat-icon>
+                </div>
+                <h4>{{ member.firstName }} {{ member.lastName }}</h4>
+                <p class="member-role">{{ member.role }}</p>
+                <p class="member-email">{{ member.email }}</p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+
+          <div class="empty-state" *ngIf="teamMembers.length === 0">
+            <mat-icon>group</mat-icon>
+            <p>No team members yet.</p>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>
+
+<div class="loading-container" *ngIf="loading">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>

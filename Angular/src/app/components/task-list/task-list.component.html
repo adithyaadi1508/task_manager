@@ -1,0 +1,128 @@
+<!-- <mat-toolbar color="primary">
+  <button mat-icon-button (click)="navigateToDashboard()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span>My Tasks</span>
+  <span class="spacer"></span>
+  <button mat-raised-button (click)="openTaskDialog()">
+    <mat-icon>add</mat-icon> New Task
+  </button>
+  <button mat-button (click)="logout()">
+    <mat-icon>logout</mat-icon> Logout
+  </button>
+</mat-toolbar> -->
+<app-navbar 
+  title="My Tasks"
+  [showBackButton]="true"
+  [showNewButton]="true"
+  newButtonText="New Task"
+  (backClick)="navigateToDashboard()"
+  (newClick)="openTaskDialog()">
+</app-navbar>
+
+<div class="task-list-container">
+  <!-- Filters Section -->
+  <div class="filters-section">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search</mat-label>
+      <input matInput [(ngModel)]="searchText" (ngModelChange)="onSearchChange()" placeholder="Search tasks...">
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Status</mat-label>
+      <mat-select [(ngModel)]="selectedStatus" (ngModelChange)="onStatusChange()">
+        <mat-option *ngFor="let status of statuses" [value]="status">
+          {{ status.replace('_', ' ') }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Priority</mat-label>
+      <mat-select [(ngModel)]="selectedPriority" (ngModelChange)="onPriorityChange()">
+        <mat-option *ngFor="let priority of priorities" [value]="priority">
+          {{ priority }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-stroked-button (click)="clearFilters()" class="clear-btn">
+      <mat-icon>clear</mat-icon> Clear Filters
+    </button>
+  </div>
+
+  <!-- Task Count -->
+  <div class="task-count">
+    Showing {{ filteredTasks.length }} of {{ tasks.length }} tasks
+  </div>
+
+  <!-- Tasks Table -->
+  <table mat-table [dataSource]="filteredTasks" class="task-table">
+    
+    <ng-container matColumnDef="projectName">
+      <th mat-header-cell *matHeaderCellDef>Project</th>
+      <td mat-cell *matCellDef="let task">{{ task.project?.name || 'N/A' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef>Title</th>
+      <td mat-cell *matCellDef="let task">{{ task.title }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>Description</th>
+      <td mat-cell *matCellDef="let task">
+        {{ task.description.length > 50 ? task.description.substring(0, 50) + '...' : task.description }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let task">
+        <mat-chip [color]="getStatusColor(task.status)" highlighted>
+          {{ task.status.replace('_', ' ') }}
+        </mat-chip>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="priority">
+      <th mat-header-cell *matHeaderCellDef>Priority</th>
+      <td mat-cell *matCellDef="let task">
+        <mat-chip [style.background-color]="getPriorityColor(task.priority)" [style.color]="'white'">
+          {{ task.priority }}
+        </mat-chip>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dueDate">
+      <th mat-header-cell *matHeaderCellDef>Due Date</th>
+      <td mat-cell *matCellDef="let task">{{ task.dueDate | date }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let task">
+        <button mat-icon-button color="primary" (click)="openTaskDialog(task)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteTask(task.id!)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <div *ngIf="filteredTasks.length === 0 && tasks.length > 0" class="no-tasks">
+    <mat-icon>filter_list_off</mat-icon>
+    <p>No tasks match your filters</p>
+  </div>
+
+  <div *ngIf="tasks.length === 0" class="no-tasks">
+    <mat-icon>assignment</mat-icon>
+    <p>No tasks yet. Click "New Task" to create one!</p>
+  </div>
+</div>

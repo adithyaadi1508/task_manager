@@ -1,0 +1,234 @@
+/* Toolbar */
+mat-toolbar {
+  background: linear-gradient(135deg, #4f46e5, #3b82f6);
+  padding: 0 20px;
+  height: 64px;
+}
+
+mat-toolbar span {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: white;
+  margin-left: 15px;
+}
+
+.spacer { flex: 1 1 auto; }
+
+button[mat-icon-button] {
+  color: white;
+}
+
+button[mat-button], button[mat-raised-button] {
+  margin-left: 10px;
+  transition: all 0.3s ease;
+}
+
+button[mat-button] {
+  color: white;
+  border-radius: 20px;
+}
+
+button[mat-button]:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+button[mat-raised-button] {
+  background: white;
+  color: #4f46e5;
+  font-weight: 500;
+  border-radius: 8px;
+}
+
+button[mat-raised-button]:hover {
+  background: #f8fafc;
+}
+
+/* Container */
+.task-list-container {
+  padding: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Filters */
+.filters-section {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.search-field, .filter-field {
+  min-width: 200px;
+}
+
+.search-field {
+  flex: 1;
+  max-width: 300px;
+}
+
+.clear-btn {
+  height: 56px;
+  border-radius: 8px;
+}
+
+/* Task Count */
+.task-count {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  text-align: right;
+}
+
+/* Tasks Table */
+.task-table {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+::ng-deep .mat-header-row {
+  background: #f3f4f6;
+  height: 56px;
+}
+
+::ng-deep .mat-header-cell {
+  color: #374151;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0 16px;
+}
+
+::ng-deep .mat-row {
+  height: 60px;
+  transition: background 0.2s ease;
+}
+
+::ng-deep .mat-row:hover {
+  background: #f9fafb;
+}
+
+::ng-deep .mat-cell {
+  padding: 0 16px;
+  color: #1f2937;
+  font-size: 0.9rem;
+}
+
+/* Chips */
+mat-chip {
+  font-size: 0.8rem;
+  font-weight: 500;
+  height: 26px;
+  border-radius: 6px;
+}
+
+/* Table Columns */
+.mat-column-actions {
+  text-align: center;
+  width: 120px;
+}
+
+.mat-column-title {
+  min-width: 200px;
+}
+
+.mat-column-description {
+  max-width: 300px;
+}
+
+.mat-column-projectName,
+.mat-column-dueDate {
+  width: 150px;
+}
+
+/* Action Buttons */
+button[mat-icon-button] {
+  margin: 0 4px;
+  width: 36px;
+  height: 36px;
+}
+
+button[mat-icon-button]:first-child {
+  color: #3b82f6;
+}
+
+button[mat-icon-button]:last-child {
+  color: #ef4444;
+}
+
+/* No Tasks State */
+.no-tasks {
+  text-align: center;
+  padding: 60px 20px;
+  color: #9ca3af;
+}
+
+.no-tasks mat-icon {
+  font-size: 60px;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 15px;
+  color: #d1d5db;
+}
+
+.no-tasks p {
+  font-size: 1.1rem;
+  margin: 0;
+  color: #6b7280;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .task-list-container {
+    padding: 20px;
+  }
+  
+  .filters-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .search-field, .filter-field {
+    width: 100%;
+    max-width: none;
+  }
+  
+  .clear-btn {
+    align-self: flex-start;
+  }
+  
+  .task-table {
+    display: block;
+    overflow-x: auto;
+  }
+  
+  .mat-column-description {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  mat-toolbar span {
+    font-size: 1.1rem;
+  }
+  
+  button[mat-button] span {
+    display: none;
+  }
+  
+  button[mat-button] mat-icon {
+    margin-right: 0;
+  }
+  
+  .mat-column-projectName {
+    display: none;
+  }
+}

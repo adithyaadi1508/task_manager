@@ -1,0 +1,166 @@
+/* Register Container */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+}
+
+mat-card {
+  width: 100%;
+  max-width: 500px;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  background: white;
+}
+
+/* Card Header */
+mat-card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+mat-card-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 10px;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+mat-card-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  border-radius: 2px;
+}
+
+/* Form */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.name-row {
+  display: flex;
+  gap: 15px;
+}
+
+.half-width {
+  flex: 1;
+}
+
+/* Form Fields */
+mat-form-field {
+  width: 100%;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: #e2e8f0;
+  background: white;
+  border-radius: 8px;
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: #667eea;
+}
+
+::ng-deep .mat-form-field-label {
+  color: #a0aec0 !important;
+  font-weight: 500;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+  color: #667eea !important;
+}
+
+::ng-deep .mat-input-element {
+  color: #2d3748;
+  font-size: 16px;
+}
+
+/* Error Messages */
+mat-error {
+  font-size: 12px;
+  color: #f56565;
+  margin-top: 5px;
+}
+
+/* Register Button */
+button[mat-raised-button] {
+  height: 48px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 10px;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+button[mat-raised-button]:hover:not([disabled]) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+}
+
+button[mat-raised-button]:disabled {
+  opacity: 0.6;
+  background: #a0aec0;
+}
+
+/* Login Link */
+.login-link {
+  text-align: center;
+  margin-top: 25px;
+  padding-top: 25px;
+  border-top: 1px solid #e2e8f0;
+  color: #718096;
+  font-size: 14px;
+}
+
+.login-link a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 5px;
+  transition: color 0.2s ease;
+}
+
+.login-link a:hover {
+  color: #764ba2;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  mat-card {
+    padding: 30px 20px;
+  }
+  
+  .name-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  mat-card-title {
+    font-size: 24px;
+  }
+}

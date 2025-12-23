@@ -1,0 +1,87 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Edit Project' : 'Create New Project' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="projectForm">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Project Name</mat-label>
+      <input matInput formControlName="name" placeholder="Enter project name">
+      <mat-error *ngIf="projectForm.get('name')?.hasError('required')">
+        Project name is required
+      </mat-error>
+      <mat-error *ngIf="projectForm.get('name')?.hasError('minlength')">
+        Minimum 3 characters required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" 
+                placeholder="Enter project description" 
+                rows="4"></textarea>
+      <mat-error *ngIf="projectForm.get('description')?.hasError('required')">
+        Description is required
+      </mat-error>
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          <mat-option *ngFor="let status of statuses" [value]="status">
+            {{ status.replace('_', ' ') }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Priority</mat-label>
+        <mat-select formControlName="priority">
+          <mat-option *ngFor="let priority of priorities" [value]="priority">
+            {{ priority }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Start Date</mat-label>
+        <input matInput [matDatepicker]="startPicker" formControlName="startDate">
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+        <mat-error *ngIf="projectForm.get('startDate')?.hasError('required')">
+          Start date is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>End Date (Optional)</mat-label>
+        <input matInput [matDatepicker]="endPicker" formControlName="endDate">
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Budget (Optional)</mat-label>
+      <input matInput type="number" formControlName="budget" placeholder="Enter budget">
+      <span matPrefix>₹&nbsp;</span>
+    </mat-form-field>
+
+    <div class="progress-slider" *ngIf="isEditMode">
+      <label>Progress: {{ projectForm.get('progress')?.value }}%</label>
+      <mat-slider min="0" max="100" step="5" discrete [displayWith]="formatLabel">
+        <input matSliderThumb formControlName="progress">
+      </mat-slider>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" 
+          (click)="onSubmit()" 
+          [disabled]="projectForm.invalid">
+    {{ isEditMode ? 'Update' : 'Create' }}
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>Manage Team Members</h2>
+
+<mat-dialog-content>
+  <!-- Add Member Form -->
+  <div class="add-member-section">
+    <h3>Add Team Member</h3>
+    <div class="add-form">
+      <mat-form-field appearance="outline" class="user-field">
+        <mat-label>Select User</mat-label>
+        <mat-select [(ngModel)]="selectedUserId">
+          <mat-option *ngFor="let user of availableUsers" [value]="user.id">
+            {{ user.firstName }} {{ user.lastName }} ({{ user.username }})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="role-field">
+        <mat-label>Role</mat-label>
+        <mat-select [(ngModel)]="selectedRole">
+          <mat-option *ngFor="let role of roles" [value]="role">
+            {{ role }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="addMember()">
+        <mat-icon>person_add</mat-icon> Add
+      </button>
+    </div>
+  </div>
+
+  <!-- Current Team Members -->
+  <div class="team-list-section">
+    <h3>Current Team ({{ teamMembers.length }})</h3>
+    
+    <mat-list *ngIf="teamMembers.length > 0">
+      <mat-list-item *ngFor="let member of teamMembers" class="team-member-item">
+        <mat-icon matListItemIcon>account_circle</mat-icon>
+        <div matListItemTitle>{{ member.firstName }} {{ member.lastName }}</div>
+        <div matListItemLine>
+          <span class="member-username">{{ member.username }}</span>
+          <span class="member-role">{{ member.role }}</span>
+        </div>
+        <button mat-icon-button color="warn" (click)="removeMember(member.id)">
+          <mat-icon>remove_circle</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+
+    <div class="empty-state" *ngIf="teamMembers.length === 0">
+      <mat-icon>group</mat-icon>
+      <p>No team members yet</p>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button (click)="close()">Close</button>
+</mat-dialog-actions>

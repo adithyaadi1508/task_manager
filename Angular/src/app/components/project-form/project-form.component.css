@@ -1,0 +1,151 @@
+/* Dialog Container */
+mat-dialog-container {
+  border-radius: 16px !important;
+  max-width: 500px !important;
+  padding: 0 !important;
+}
+
+/* Dialog Title */
+h2[mat-dialog-title] {
+  padding: 24px;
+  margin: 0;
+  color: #1f2937;
+  font-size: 1.5rem;
+  font-weight: 600;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Dialog Content */
+mat-dialog-content {
+  padding: 24px !important;
+  max-height: 70vh !important;
+  overflow-y: auto;
+}
+
+/* Form Fields */
+.full-width {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.half-width {
+  flex: 1;
+}
+
+/* Form Field Styling */
+mat-form-field {
+  width: 100%;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: #d1d5db;
+  background: white;
+  border-radius: 8px;
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: #3b82f6;
+}
+
+::ng-deep .mat-form-field-label {
+  color: #6b7280 !important;
+  font-weight: 500;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+  color: #3b82f6 !important;
+}
+
+::ng-deep .mat-input-element {
+  color: #1f2937;
+  font-weight: 500;
+}
+
+/* Budget Field Prefix */
+::ng-deep mat-prefix {
+  color: #6b7280 !important;
+  margin-right: 8px !important;
+}
+
+/* Progress Slider */
+.progress-slider {
+  margin: 30px 0 20px;
+  padding: 20px;
+  background: #f9fafb;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.progress-slider label {
+  display: block;
+  color: #374151;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+::ng-deep .mat-slider {
+  width: 100%;
+}
+
+/* Dialog Actions */
+mat-dialog-actions {
+  padding: 16px 24px !important;
+  margin: 0 !important;
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+}
+
+button[mat-button] {
+  color: #6b7280;
+  font-weight: 500;
+  padding: 8px 20px;
+  border-radius: 6px;
+}
+
+button[mat-button]:hover {
+  background: #f3f4f6;
+}
+
+button[mat-raised-button] {
+  background: #3b82f6;
+  color: white;
+  font-weight: 500;
+  padding: 8px 24px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+button[mat-raised-button]:hover:not([disabled]) {
+  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+button[mat-raised-button]:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  mat-dialog-container {
+    margin: 16px !important;
+    width: auto !important;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  mat-dialog-content {
+    padding: 20px !important;
+  }
+}

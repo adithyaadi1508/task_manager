@@ -1,0 +1,210 @@
+/* Dialog Container */
+mat-dialog-container {
+  border-radius: 16px !important;
+  max-width: 600px !important;
+  padding: 0 !important;
+}
+
+/* Dialog Title */
+h2[mat-dialog-title] {
+  padding: 24px;
+  margin: 0;
+  color: #1f2937;
+  font-size: 1.5rem;
+  font-weight: 600;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Dialog Content */
+mat-dialog-content {
+  padding: 24px !important;
+  max-height: 70vh !important;
+  overflow-y: auto;
+}
+
+/* Add Member Section */
+.add-member-section {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.add-member-section h3 {
+  color: #374151;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.add-form {
+  display: flex;
+  gap: 15px;
+  align-items: flex-end;
+}
+
+.user-field {
+  flex: 2;
+}
+
+.role-field {
+  flex: 1;
+}
+
+button[mat-raised-button] {
+  background: #3b82f6;
+  color: white;
+  font-weight: 500;
+  padding: 0 24px;
+  height: 56px;
+  border-radius: 8px;
+}
+
+button[mat-raised-button] mat-icon {
+  margin-right: 8px;
+}
+
+/* Team List Section */
+.team-list-section h3 {
+  color: #374151;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* Team List */
+mat-list {
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+}
+
+.team-member-item {
+  border-bottom: 1px solid #f3f4f6;
+  padding: 12px 16px !important;
+  transition: background 0.2s ease;
+}
+
+.team-member-item:hover {
+  background: #f9fafb;
+}
+
+.team-member-item mat-icon[matListItemIcon] {
+  color: #6b7280;
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+  margin-right: 16px;
+}
+
+.team-member-item [matListItemTitle] {
+  color: #1f2937;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.team-member-item [matListItemLine] {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.member-username {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.member-role {
+  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.team-member-item button[mat-icon-button] {
+  color: #ef4444;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.team-member-item button[mat-icon-button]:hover {
+  opacity: 1;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #9ca3af;
+}
+
+.empty-state mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 12px;
+  color: #d1d5db;
+}
+
+.empty-state p {
+  font-size: 1rem;
+  margin: 0;
+  color: #6b7280;
+}
+
+/* Dialog Actions */
+mat-dialog-actions {
+  padding: 16px 24px !important;
+  margin: 0 !important;
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+}
+
+button[mat-raised-button] {
+  background: #6b7280;
+  color: white;
+  padding: 8px 24px;
+  border-radius: 6px;
+}
+
+button[mat-raised-button]:hover {
+  background: #4b5563;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .add-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .user-field, .role-field, button[mat-raised-button] {
+    width: 100%;
+  }
+  
+  .team-member-item [matListItemLine] {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  mat-dialog-container {
+    margin: 16px !important;
+    width: auto !important;
+  }
+}
+
+@media (max-width: 480px) {
+  mat-dialog-content {
+    padding: 16px !important;
+  }
+  
+  h2[mat-dialog-title] {
+    padding: 20px;
+    font-size: 1.3rem;
+  }
+}

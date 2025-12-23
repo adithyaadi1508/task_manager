@@ -1,0 +1,150 @@
+<!-- <mat-toolbar color="primary">
+  <button mat-icon-button (click)="navigateToDashboard()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span>Projects</span>
+  <span class="spacer"></span>
+  <button mat-raised-button (click)="openProjectDialog()">
+    <mat-icon>add</mat-icon> New Project
+  </button>
+  <button mat-button (click)="logout()">
+    <mat-icon>logout</mat-icon> Logout
+  </button>
+</mat-toolbar> -->
+<app-navbar title="Projects" [showBackButton]="true" [showNewButton]="true" newButtonText="New Project"
+  (backClick)="navigateToDashboard()" (newClick)="openProjectDialog()">
+</app-navbar>
+
+
+
+<div class="page-background">
+  <div class="project-list-container">
+    <!-- Header Section -->
+    <div class="list-header">
+      <div class="header-content">
+        <h1>Your Projects</h1>
+        <div class="project-count">
+          Showing {{ filteredProjects.length }} of {{ projects.length }} projects
+        </div>
+      </div>
+
+      <!-- Filters Control Bar -->
+      <div class="filters-glass-bar">
+        <div class="search-wrapper">
+          <mat-icon>search</mat-icon>
+          <input type="text" [(ngModel)]="searchText" (ngModelChange)="onSearchChange()"
+            placeholder="Search projects...">
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="filter-group">
+          <span class="filter-label">Status:</span>
+          <select [(ngModel)]="selectedStatus" (ngModelChange)="onStatusChange()">
+            <option *ngFor="let status of statuses" [value]="status">
+              {{ status === 'ALL' ? 'All Statuses' : status.replace('_', ' ') }}
+            </option>
+          </select>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="filter-group">
+          <span class="filter-label">Priority:</span>
+          <select [(ngModel)]="selectedPriority" (ngModelChange)="onPriorityChange()">
+            <option *ngFor="let priority of priorities" [value]="priority">
+              {{ priority === 'ALL' ? 'All Priorities' : priority }}
+            </option>
+          </select>
+        </div>
+
+        <button class="btn-clear" (click)="clearFilters()"
+          *ngIf="searchText || selectedStatus !== 'ALL' || selectedPriority !== 'ALL'">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading-state">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading your workspace...</p>
+    </div>
+
+    <!-- Project Cards Grid -->
+    <div class="projects-grid" *ngIf="!loading">
+      <div *ngFor="let project of filteredProjects" class="glass-card" (click)="viewProject(project.id!)">
+        <div class="card-image-gradient"></div>
+
+        <div class="card-content">
+          <div class="card-header">
+            <div class="title-section">
+              <h3>{{ project.name }}</h3>
+              <div class="badges">
+                <span class="status-pill" [ngClass]="getStatusClass(project.status)">
+                  {{ project.status.replace('_', ' ') }}
+                </span>
+                <span class="priority-dot" [ngClass]="getPriorityClass(project.priority)"
+                  [title]="project.priority"></span>
+              </div>
+            </div>
+
+            <button class="menu-btn" [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
+              <mat-icon>more_horiz</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" xPosition="before">
+              <button mat-menu-item (click)="openProjectDialog(project)">
+                <mat-icon>edit</mat-icon> Edit
+              </button>
+              <button mat-menu-item class="delete-item" (click)="deleteProject(project.id!, $event)">
+                <mat-icon>delete</mat-icon> Delete
+              </button>
+            </mat-menu>
+          </div>
+
+          <p class="description">{{ project.description }}</p>
+
+          <div class="progress-section" *ngIf="project.progress !== undefined">
+            <div class="progress-info">
+              <span class="label">Progress</span>
+              <span class="value">{{ project.progress }}%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" [style.width.%]="project.progress"></div>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="meta-item" *ngIf="project.endDate">
+              <mat-icon>schedule</mat-icon>
+              <span>{{ project.endDate | date:'MMM d' }}</span>
+            </div>
+
+            <div class="team-avatars" *ngIf="project.team">
+              <!-- Show max 3 avatars -->
+              <div class="avatar-mini" *ngFor="let member of project.team.slice(0,3)">
+                {{ member.firstName.charAt(0) }}
+              </div>
+              <div class="avatar-counter" *ngIf="project.team.length > 3">
+                +{{ project.team.length - 3 }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!loading && filteredProjects.length === 0" class="empty-glass">
+      <div class="empty-icon-circle">
+        <mat-icon>{{ projects.length === 0 ? 'rocket_launch' : 'search_off' }}</mat-icon>
+      </div>
+      <h3>{{ projects.length === 0 ? 'Start Your First Project' : 'No matches found' }}</h3>
+      <p>{{ projects.length === 0 ? 'Create a project to begin tracking your tasks and team.' : 'Try adjusting your
+        filters to see more results.' }}</p>
+      <button class="btn-primary-shine" *ngIf="projects.length === 0" (click)="openProjectDialog()">
+        Create Project
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,236 @@
+/* Glassmorphism Navbar Container */
+.glass-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  padding: 0 24px;
+  background: var(--bg-surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--glass-border-strong);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  z-index: 1000;
+  color: var(--text-primary);
+  transition: background 0.3s, border-color 0.3s, color 0.3s;
+}
+
+/* Common Font Settings */
+.glass-navbar, button, .app-title, .username-text {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Left Section */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.back-btn {
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+  color: var(--text-primary);
+  background: var(--glass-bg);
+}
+
+.brand-container {
+  display: flex;
+  align-items: center;
+}
+
+.app-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  /* Optional: Keep gradient if desired, or make it dynamic */
+  /* background: linear-gradient(to right, #fff, #94a3b8); */
+  /* -webkit-background-clip: text; */
+  /* background-clip: text; */
+  /* -webkit-text-fill-color: transparent; */
+}
+
+/* Spacer */
+.spacer {
+  flex: 1;
+}
+
+/* Right Section */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* User Badge */
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 16px 6px 6px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+.user-badge:hover {
+  background: var(--glass-shine);
+  border-color: var(--glass-border-strong);
+}
+
+.avatar-circle {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.username-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Base Button Reset */
+button.btn-create, button.btn-logout {
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 42px;
+}
+
+/* Create Button (Primary) */
+.btn-create {
+  background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+  color: white;
+  box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.3), 0 2px 4px -1px rgba(79, 70, 229, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-create::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(255,255,255,0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.btn-create:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);
+}
+
+.btn-create:hover::after {
+  opacity: 1;
+}
+
+.btn-create:active {
+  transform: translateY(0);
+}
+
+.btn-create mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+/* Theme Toggle Button (Same as Logout for base) */
+.btn-theme {
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+
+.btn-theme:hover {
+  color: var(--text-primary);
+  background: var(--glass-bg);
+}
+
+/* Logout Button (Secondary) */
+.btn-logout {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--glass-border);
+}
+
+.btn-logout:hover {
+  background: var(--glass-bg);
+  color: var(--text-primary);
+  border-color: var(--glass-border-strong);
+  transform: translateY(-1px);
+}
+
+.btn-logout mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .glass-navbar {
+    padding: 0 16px;
+    height: 64px;
+  }
+  
+  .username-text {
+    display: none;
+  }
+  
+  .user-badge {
+    padding: 0;
+    border: none;
+    background: transparent;
+  }
+  
+  .actions {
+    gap: 8px;
+  }
+  
+  button.btn-create span, button.btn-logout span {
+    display: none;
+  }
+  
+  button.btn-create, button.btn-logout {
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    border-radius: 10px;
+  }
+  
+  button.btn-create mat-icon, button.btn-logout mat-icon {
+    margin: 0;
+  }
+}
