@@ -10,9 +10,13 @@ import { UserSimple } from '../models/user.model';
 export class UserService {
   private apiUrl = `${environment.apiUrl}/users`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAllUsers(): Observable<UserSimple[]> {
     return this.http.get<UserSimple[]>(this.apiUrl);
+  }
+
+  deleteUser(userId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${userId}`);
   }
 }

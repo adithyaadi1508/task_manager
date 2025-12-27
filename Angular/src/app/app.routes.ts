@@ -5,6 +5,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TaskListComponent } from './components/task-list/task-list.component';
 import { ProjectListComponent } from './components/project-list/project-list.component';
 import { ProjectDetailComponent } from './components/project-detail/project-detail.component';
+import { ManageUsersComponent } from './components/manage-users/manage-users.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { authGuard } from './guards/auth.guard';
 
@@ -12,24 +13,29 @@ export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { 
-    path: 'dashboard', 
+  {
+    path: 'dashboard',
     component: DashboardComponent,
     canActivate: [authGuard]
   },
-  { 
-    path: 'tasks', 
+  {
+    path: 'tasks',
     component: TaskListComponent,
     canActivate: [authGuard]
   },
-  { 
-    path: 'projects', 
+  {
+    path: 'projects',
     component: ProjectListComponent,
     canActivate: [authGuard]
   },
-  { 
-    path: 'projects/:id', 
+  {
+    path: 'projects/:id',
     component: ProjectDetailComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'team/users',
+    component: ManageUsersComponent,
     canActivate: [authGuard]
   },
   { path: '**', component: NotFoundComponent }

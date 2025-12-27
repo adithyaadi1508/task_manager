@@ -70,6 +70,8 @@
   white-space: nowrap;
   overflow: hidden;
   height: 48px;
+  position: relative;
+  cursor: pointer;
 }
 
 .menu-item:hover {
@@ -143,3 +145,78 @@
 @keyframes fadeIn {
   to { opacity: 1; }
 }
+
+/* Nested Menu Styles */
+.menu-item-group {
+  width: 100%;
+}
+
+.expand-icon {
+  position: absolute;
+  right: 12px;
+  font-size: 20px;
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+
+.submenu {
+  background: var(--glass-bg, rgba(0, 0, 0, 0.05));
+  animation: slideDown 0.3s ease;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.submenu-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 8px 6px 52px; /* Indent for nested items */
+  text-decoration: none;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  margin: 2px 0;
+  height: 26px;
+}
+
+.submenu-item:hover {
+  background: var(--card-hover-bg);
+  color: var(--text-primary);
+}
+
+.submenu-item.active {
+  background: rgba(79, 70, 229, 0.15);
+  color: var(--item-active-color);
+  font-weight: 500;
+}
+
+.submenu-item mat-icon {
+  font-size: 16px;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  margin-right: 12px;
+}
+
+.submenu-item .label {
+  font-weight: 500;
+  opacity: 1; /* Always visible in submenu */
+}
+
+@keyframes slideDown {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 300px;
+    opacity: 1;
+  }
+}
+
+/* Ensure submenu only shows when sidebar is expanded */
+.sidebar-container:not(.expanded) .submenu {
+  display: none;
+}
+

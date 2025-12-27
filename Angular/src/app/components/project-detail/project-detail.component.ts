@@ -73,7 +73,7 @@ export class ProjectDetailComponent implements OnInit {
     this.projectService.getProjectById(this.projectId).subscribe({
       next: (project) => {
         this.project = project;
-        this.loadProjectStats();
+        // this.loadProjectStats();
         this.loadProjectTasks();
         this.loadProjectTeam();
       },
