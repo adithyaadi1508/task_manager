@@ -19,6 +19,7 @@
   --bg-page-gradient: radial-gradient(at 0% 0%, #1e293b 0px, transparent 50%), 
                       radial-gradient(at 100% 0%, #312e81 0px, transparent 50%), 
                       #0f172a;
+  --item-active-color: #818cf8; /* Lighter Indigo for Dark Mode */
 }
 
 [data-theme="light"] {
@@ -26,6 +27,7 @@
   --bg-page: #f8fafc;
   --bg-surface: rgba(255, 255, 255, 0.8);
   --bg-sidebar: #ffffff; /* Solid Light Sidebar */
+  --item-active-color: #4f46e5; /* Brand Indigo for Light Mode */
   --text-primary: #0f172a;
   --text-secondary: #475569;
   --text-tertiary: #94a3b8;

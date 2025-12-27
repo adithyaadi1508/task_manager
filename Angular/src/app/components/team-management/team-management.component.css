@@ -1,19 +1,20 @@
-/* Dialog Container */
-mat-dialog-container {
+/* Global Scope for Dialog */
+::ng-deep .mat-mdc-dialog-container .mat-mdc-dialog-surface {
+  background-color: var(--bg-surface) !important;
   border-radius: 16px !important;
-  max-width: 600px !important;
-  padding: 0 !important;
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: var(--shadow-sm) !important;
 }
 
 /* Dialog Title */
 h2[mat-dialog-title] {
   padding: 24px;
   margin: 0;
-  color: #1f2937;
+  color: var(--text-primary) !important;
   font-size: 1.5rem;
   font-weight: 600;
-  background: #f9fafb;
-  border-bottom: 1px solid #e5e7eb;
+  background: var(--glass-bg);
+  border-bottom: 1px solid var(--glass-border);
 }
 
 /* Dialog Content */
@@ -21,17 +22,18 @@ mat-dialog-content {
   padding: 24px !important;
   max-height: 70vh !important;
   overflow-y: auto;
+  background: var(--bg-surface) !important;
 }
 
 /* Add Member Section */
 .add-member-section {
   margin-bottom: 32px;
   padding-bottom: 24px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--glass-border);
 }
 
 .add-member-section h3 {
-  color: #374151;
+  color: var(--text-primary) !important;
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 20px;
@@ -43,30 +45,43 @@ mat-dialog-content {
   align-items: flex-end;
 }
 
-.user-field {
-  flex: 2;
+.user-field { flex: 2; }
+.role-field { flex: 1; }
+
+/* Override Mat Form Field Theme */
+::ng-deep .mat-mdc-form-field-flex {
+  background-color: var(--bg-page) !important;
+  border-radius: 8px;
 }
 
-.role-field {
-  flex: 1;
+::ng-deep .mat-mdc-text-field-wrapper {
+  background-color: var(--bg-page) !important;
+}
+
+::ng-deep .mat-mdc-form-field-input-control {
+  color: var(--text-primary) !important;
+}
+
+::ng-deep .mat-mdc-select-value {
+  color: var(--text-primary) !important;
+}
+
+::ng-deep .mat-mdc-select-arrow {
+  color: var(--text-secondary) !important;
 }
 
 button[mat-raised-button] {
-  background: #3b82f6;
-  color: white;
+  background: linear-gradient(135deg, #4f46e5, #3b82f6);
+  color: white !important;
   font-weight: 500;
   padding: 0 24px;
   height: 56px;
   border-radius: 8px;
 }
 
-button[mat-raised-button] mat-icon {
-  margin-right: 8px;
-}
-
 /* Team List Section */
 .team-list-section h3 {
-  color: #374151;
+  color: var(--text-primary) !important;
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 20px;
@@ -75,48 +90,44 @@ button[mat-raised-button] mat-icon {
 /* Team List */
 mat-list {
   border-radius: 8px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--glass-border);
   overflow: hidden;
+  background: var(--bg-page) !important;
 }
 
 .team-member-item {
-  border-bottom: 1px solid #f3f4f6;
-  padding: 12px 16px !important;
+  border-bottom: 1px solid var(--glass-border);
   transition: background 0.2s ease;
 }
 
 .team-member-item:hover {
-  background: #f9fafb;
+  background: var(--card-hover-bg) !important;
 }
 
-.team-member-item mat-icon[matListItemIcon] {
-  color: #6b7280;
-  font-size: 32px;
-  width: 32px;
-  height: 32px;
-  margin-right: 16px;
+/* Specific Targets for MDC List Item Content */
+::ng-deep .team-member-item .mat-mdc-list-item-title {
+  color: var(--text-primary) !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
 }
 
-.team-member-item [matListItemTitle] {
-  color: #1f2937;
-  font-weight: 600;
-  font-size: 1rem;
-  margin-bottom: 4px;
+::ng-deep .team-member-item .mat-mdc-list-item-unscoped-content {
+  color: var(--text-primary) !important;
 }
 
-.team-member-item [matListItemLine] {
-  display: flex;
-  gap: 15px;
-  align-items: center;
+/* For list item lines */
+::ng-deep .team-member-item .mat-mdc-list-item-line {
+  color: var(--text-secondary) !important;
 }
 
 .member-username {
-  color: #6b7280;
+  color: var(--text-secondary) !important;
   font-size: 0.9rem;
+  margin-right: 15px;
 }
 
 .member-role {
-  color: #3b82f6;
+  color: #3b82f6 !important;
   background: rgba(59, 130, 246, 0.1);
   padding: 4px 12px;
   border-radius: 12px;
@@ -124,87 +135,46 @@ mat-list {
   font-weight: 500;
 }
 
+/* Action Buttons */
 .team-member-item button[mat-icon-button] {
-  color: #ef4444;
-  opacity: 0.7;
-  transition: opacity 0.2s ease;
+  color: #ef4444 !important;
 }
 
-.team-member-item button[mat-icon-button]:hover {
-  opacity: 1;
-  background: rgba(239, 68, 68, 0.1);
+.team-member-item mat-icon[matListItemIcon] {
+  color: var(--text-secondary) !important;
 }
 
 /* Empty State */
 .empty-state {
   text-align: center;
   padding: 40px 20px;
-  color: #9ca3af;
+  color: var(--text-secondary) !important;
 }
 
 .empty-state mat-icon {
-  font-size: 48px;
-  width: 48px;
-  height: 48px;
-  margin-bottom: 12px;
-  color: #d1d5db;
+  color: var(--text-tertiary) !important;
 }
 
 .empty-state p {
-  font-size: 1rem;
-  margin: 0;
-  color: #6b7280;
+  color: var(--text-secondary) !important;
 }
 
 /* Dialog Actions */
 mat-dialog-actions {
   padding: 16px 24px !important;
   margin: 0 !important;
-  background: #f9fafb;
-  border-top: 1px solid #e5e7eb;
+  background: var(--glass-bg) !important;
+  border-top: 1px solid var(--glass-border) !important;
 }
 
-button[mat-raised-button] {
-  background: #6b7280;
-  color: white;
-  padding: 8px 24px;
-  border-radius: 6px;
-}
-
-button[mat-raised-button]:hover {
-  background: #4b5563;
+mat-dialog-actions button[mat-raised-button] {
+  background: var(--glass-border-strong) !important;
+  color: var(--text-primary) !important;
+  height: 40px;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .add-form {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  
-  .user-field, .role-field, button[mat-raised-button] {
-    width: 100%;
-  }
-  
-  .team-member-item [matListItemLine] {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-  
-  mat-dialog-container {
-    margin: 16px !important;
-    width: auto !important;
-  }
-}
-
-@media (max-width: 480px) {
-  mat-dialog-content {
-    padding: 16px !important;
-  }
-  
-  h2[mat-dialog-title] {
-    padding: 20px;
-    font-size: 1.3rem;
-  }
+  .add-form { flex-direction: column; align-items: stretch; }
+  .user-field, .role-field, button[mat-raised-button] { width: 100%; }
 }
