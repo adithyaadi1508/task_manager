@@ -1,17 +1,13 @@
 package com.project.task_manager.controller;
 
+import com.project.task_manager.config.swagger.*;
 import com.project.task_manager.dto.request.ProjectRequest;
 import com.project.task_manager.dto.response.MessageResponse;
 import com.project.task_manager.dto.response.ProjectResponse;
 import com.project.task_manager.service.ProjectService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -30,207 +26,86 @@ import java.util.Map;
 @RequestMapping("/projects")
 @RequiredArgsConstructor
 @Tag(name = "Project Management", description = "APIs for managing projects and project lifecycles")
-@SecurityRequirement(name = "bearerAuth")
+@StandardApiResponses
 public class ProjectController {
 
     private final ProjectService projectService;
 
     @PostMapping
+    @PostApiResponses  // POST = Create → 201, 400, 401
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
-    @Operation(
-            summary = "Create a new project",
-            description = "Create a new project with tasks. Only authenticated users can create projects."
-    )
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "201",
-                    description = "Project created successfully",
-                    content = @Content(schema = @Schema(implementation = ProjectResponse.class))
-            ),
-            @ApiResponse(
-                    responseCode = "400",
-                    description = "Invalid input data"
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Unauthorized - JWT token missing or invalid"
-            )
-    })
-    public ResponseEntity<ProjectResponse> createProject(
-            @Valid @RequestBody ProjectRequest request) {
+    @Operation(summary = "Create a new project")
+    public ResponseEntity<ProjectResponse> createProject(@Valid @RequestBody ProjectRequest request) {
         ProjectResponse response = projectService.createProject(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
+    @GetApiResponses  // GET by ID → 200, 404, 401
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'MEMBER')")
-    @Operation(
-            summary = "Get project by ID",
-            description = "Retrieve detailed information about a specific project including all its tasks"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Project found",
-                    content = @Content(schema = @Schema(implementation = ProjectResponse.class))
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Project not found"
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Unauthorized"
-            )
-    })
-    public ResponseEntity<ProjectResponse> getProjectById(
-            @Parameter(description = "ID of the project to retrieve", required = true, example = "1")
-            @PathVariable Long id) {
-        ProjectResponse response = projectService.getProjectById(id);
-        return ResponseEntity.ok(response);
+    @Operation(summary = "Get project by ID")
+    public ResponseEntity<ProjectResponse> getProjectById(@PathVariable Long id) {
+        return ResponseEntity.ok(projectService.getProjectById(id));
     }
 
     @GetMapping("/my-projects")
-    @Operation(
-            summary = "Get current user's projects",
-            description = "Retrieve all projects created by or assigned to the currently authenticated user"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "List of user's projects retrieved successfully"
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Unauthorized"
-            )
-    })
+    @GetListApiResponses  // GET list → 200, 401
+    @Operation(summary = "Get current user's projects")
     public ResponseEntity<List<ProjectResponse>> getMyProjects() {
-        List<ProjectResponse> projects = projectService.getProjectsForCurrentUser();
-        return ResponseEntity.ok(projects);
+        return ResponseEntity.ok(projectService.getProjectsForCurrentUser());
     }
 
     @PutMapping("/{id}")
+    @PutApiResponses  // PUT = Update → 200, 400, 404, 401
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
-    @Operation(
-            summary = "Update project",
-            description = "Update an existing project's details. Only the project owner can update."
-    )
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Project updated successfully",
-                    content = @Content(schema = @Schema(implementation = ProjectResponse.class))
-            ),
-            @ApiResponse(
-                    responseCode = "400",
-                    description = "Invalid input data"
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Project not found"
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "Forbidden - User is not the project owner"
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Unauthorized"
-            )
-    })
+    @Operation(summary = "Update project")
     public ResponseEntity<ProjectResponse> updateProject(
-            @Parameter(description = "ID of the project to update", required = true, example = "1")
             @PathVariable Long id,
             @Valid @RequestBody ProjectRequest request) {
-        ProjectResponse response = projectService.updateProject(id, request);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(projectService.updateProject(id, request));
     }
 
     @DeleteMapping("/{id}")
+    @DeleteApiResponses  // DELETE → 200, 404, 401
     @PreAuthorize("hasRole('ADMIN')")
-    @Operation(
-            summary = "Delete project",
-            description = "Permanently delete a project and all its associated tasks. Only the project owner can delete."
-    )
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Project deleted successfully"
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Project not found"
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "Forbidden - User is not the project owner"
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Unauthorized"
-            )
-    })
-    public ResponseEntity<MessageResponse> deleteProject(
-            @Parameter(description = "ID of the project to delete", required = true, example = "1")
-            @PathVariable Long id) {
+    @Operation(summary = "Delete project")
+    public ResponseEntity<MessageResponse> deleteProject(@PathVariable Long id) {
         projectService.deleteProject(id);
         return ResponseEntity.ok(new MessageResponse(true, "Project deleted successfully"));
     }
 
     @GetMapping
+    @GetListApiResponses  // Paginated list → 200, 401
     @PreAuthorize("hasRole('ADMIN')")
-    @Operation(
-            summary = "Get all projects (paginated)",
-            description = "Retrieve all projects in the system with pagination and sorting support"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Projects retrieved successfully"
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Unauthorized"
-            )
-    })
+    @Operation(summary = "Get all projects (paginated)")
     public ResponseEntity<Page<ProjectResponse>> getAllProjectsPaginated(
-            @Parameter(description = "Pagination and sorting parameters (page, size, sort)", hidden = true)
-            @PageableDefault(size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<ProjectResponse> projects = projectService.getAllProjectsPaginated(pageable);
-        return ResponseEntity.ok(projects);
+            @PageableDefault(size = 5, sort = "createdAt", direction = Sort.Direction.DESC)
+            Pageable pageable) {
+        return ResponseEntity.ok(projectService.getAllProjectsPaginated(pageable));
     }
 
     @GetMapping("/paginated/my-projects")
+    @GetListApiResponses  // Paginated list → 200, 401
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'MEMBER')")
-    @Operation(
-            summary = "Get current user's projects (paginated)",
-            description = "Retrieve current user's projects with pagination and sorting support"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "User's projects retrieved successfully"
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Unauthorized"
-            )
-    })
+    @Operation(summary = "Get current user's projects (paginated)")
     public ResponseEntity<Page<ProjectResponse>> getMyProjectsPaginated(
-            @Parameter(description = "Pagination and sorting parameters (page, size, sort)", hidden = true)
-            @PageableDefault(size = 5, sort = "name", direction = Sort.Direction.ASC) Pageable pageable) {
-        Page<ProjectResponse> projects = projectService.getMyProjectsPaginated(pageable);
-        return ResponseEntity.ok(projects);
+            @PageableDefault(size = 5, sort = "name", direction = Sort.Direction.ASC)
+            Pageable pageable) {
+        return ResponseEntity.ok(projectService.getMyProjectsPaginated(pageable));
     }
+
+    // Team Management APIs
+
     @PostMapping("/{projectId}/team")
+    @PostApiResponses  // POST → 201, 400, 401
+    @Operation(summary = "Add team member to project")
     public ResponseEntity<?> addTeamMember(
+            @Parameter(description = "Project ID", example = "1")
             @PathVariable Long projectId,
             @RequestBody Map<String, Object> request) {
         try {
             Long userId = Long.valueOf(request.get("userId").toString());
             String role = request.get("role").toString();
-
             projectService.addTeamMember(projectId, userId, role);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
@@ -240,8 +115,12 @@ public class ProjectController {
     }
 
     @DeleteMapping("/{projectId}/team/{userId}")
+    @DeleteApiResponses  // DELETE → 200, 404, 401
+    @Operation(summary = "Remove team member from project")
     public ResponseEntity<?> removeTeamMember(
+            @Parameter(description = "Project ID", example = "1")
             @PathVariable Long projectId,
+            @Parameter(description = "User ID to remove", example = "5")
             @PathVariable Long userId) {
         try {
             projectService.removeTeamMember(projectId, userId);
@@ -253,8 +132,11 @@ public class ProjectController {
     }
 
     @GetMapping("/{projectId}/team")
-    public ResponseEntity<List<?>> getProjectTeam(@PathVariable Long projectId) {
-        List<?> teamMembers = projectService.getProjectTeam(projectId);
-        return ResponseEntity.ok(teamMembers);
+    @GetListApiResponses  // GET list → 200, 401
+    @Operation(summary = "Get project team members")
+    public ResponseEntity<List<?>> getProjectTeam(
+            @Parameter(description = "Project ID", example = "1")
+            @PathVariable Long projectId) {
+        return ResponseEntity.ok(projectService.getProjectTeam(projectId));
     }
 }
