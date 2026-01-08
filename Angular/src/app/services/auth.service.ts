@@ -11,11 +11,12 @@ import { AuthResponse, LoginRequest, RegisterRequest } from '../models/user.mode
 export class AuthService {
   private apiUrl = `${environment.apiUrl}/auth`;
   private tokenKey = 'auth_token';
+  private roleKey = 'user_role';
   private currentUserSubject = new BehaviorSubject<string | null>(this.getUsername());
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  register(user: RegisterRequest): Observable<any> {  
+  register(user: RegisterRequest): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, user);
   }
 
@@ -23,12 +24,16 @@ export class AuthService {
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`, credentials)
       .pipe(
         tap(response => {
+
           console.log('Full Response:', JSON.stringify(response));
           console.log('Access Token:', response.accessToken);
           console.log('User:', response.user);
-          localStorage.setItem(this.tokenKey, response.accessToken);        
-          localStorage.setItem('username', response.user.username);          
-          this.currentUserSubject.next(response.user.username); 
+          localStorage.setItem(this.tokenKey, response.accessToken);
+          localStorage.setItem('username', response.user.username);
+          if (response.user.roles) {
+            localStorage.setItem(this.roleKey, response.user.roles[0]);
+          }
+          this.currentUserSubject.next(response.user.username);
           console.log('Token saved:', localStorage.getItem(this.tokenKey));
         })
       );
@@ -37,6 +42,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem('username');
+    localStorage.removeItem(this.roleKey);
     this.currentUserSubject.next(null);
   }
 
@@ -54,5 +60,15 @@ export class AuthService {
 
   getCurrentUser(): Observable<string | null> {
     return this.currentUserSubject.asObservable();
+  }
+
+  getUserRole(): string | null {
+    return localStorage.getItem(this.roleKey);
+  }
+
+  isAdmin(): boolean {
+
+    const role = this.getUserRole();
+    return role === 'ADMIN' || role === 'admin';
   }
 }

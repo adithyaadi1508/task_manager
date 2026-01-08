@@ -1,5 +1,6 @@
 package com.project.task_manager.service.impl;
 
+import com.project.task_manager.constants.RoleConstants;
 import com.project.task_manager.dto.request.LoginRequest;
 import com.project.task_manager.dto.request.RegisterRequest;
 import com.project.task_manager.dto.response.AuthResponse;
@@ -20,7 +21,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -56,10 +56,15 @@ public class AuthServiceImpl implements AuthService {
         user.setLastName(request.getLastName());
         user.setPhone(request.getPhone());
 
-        // Assign default MEMBER role
-        Role memberRole = roleRepository.findByName("MEMBER")
-                .orElseThrow(() -> new RuntimeException("Default role not found"));
-        user.setRoles(Set.of(memberRole));
+        final String roleName =
+                (request.getRole() == null || request.getRole().isBlank())
+                        ? RoleConstants.MEMBER
+                        : request.getRole();
+
+        Role role = roleRepository.findByName(roleName)
+                .orElseThrow(() -> new RuntimeException("Role not found: " + roleName));
+
+        user.setRoles(Set.of(role));
 
         user.setIsActive(true);
         user.setIsVerified(false);

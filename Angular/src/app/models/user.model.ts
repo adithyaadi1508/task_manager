@@ -1,3 +1,9 @@
+export interface Role {
+  id?: number;
+  name: string;
+  description: string;
+}
+
 export interface User {
   id?: number;
   username: string;
@@ -6,6 +12,7 @@ export interface User {
   firstName: string;
   lastName: string;
   phone?: string;
+  role?: string;
 }
 
 export interface LoginRequest {
@@ -20,6 +27,7 @@ export interface RegisterRequest {
   firstName: string;
   lastName: string;
   phone?: string;
+  role: string;
 }
 
 export interface UserResponse {
@@ -29,6 +37,7 @@ export interface UserResponse {
   firstName: string;
   lastName: string;
   phone?: string;
+  roles?: string[];
 }
 
 export interface AuthResponse {

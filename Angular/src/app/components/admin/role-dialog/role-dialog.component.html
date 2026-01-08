@@ -1,0 +1,31 @@
+<div class="role-dialog">
+    <h2 mat-dialog-title>{{ isEditMode ? 'Edit Role' : 'Add New Role' }}</h2>
+
+    <mat-dialog-content>
+        <form [formGroup]="roleForm">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Role Name</mat-label>
+                <input matInput formControlName="name" placeholder="e.g., Project Manager">
+                <mat-error *ngIf="roleForm.get('name')?.invalid">
+                    {{ getErrorMessage('name') }}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description" rows="4"
+                    placeholder="Describe the role's responsibilities"></textarea>
+                <mat-error *ngIf="roleForm.get('description')?.invalid">
+                    {{ getErrorMessage('description') }}
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-button (click)="onCancel()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="onSave()" [disabled]="roleForm.invalid">
+            {{ isEditMode ? 'Update' : 'Create' }}
+        </button>
+    </mat-dialog-actions>
+</div>

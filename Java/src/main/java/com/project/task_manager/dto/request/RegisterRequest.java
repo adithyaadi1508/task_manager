@@ -1,6 +1,5 @@
 package com.project.task_manager.dto.request;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -38,4 +37,8 @@ public class RegisterRequest {
 
     @Size(max = 20)
     private String phone;
+
+    @NotBlank(message = "role is required")
+    @Size(max = 50)
+    private String role;
 }

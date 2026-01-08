@@ -15,8 +15,8 @@
                 <span class="label" *ngIf="isExpanded">{{ item.label }}</span>
             </a>
 
-            <!-- Menu item with children (expandable) -->
-            <div *ngIf="item.children" class="menu-item-group">
+            <!-- Menu item with children (expandable) - Show only to admins -->
+            <div *ngIf="item.children && isAdmin()" class="menu-item-group">
                 <div class="menu-item" [class.active]="hasActiveChild(item)" [class.expanded]="item.expanded"
                     (click)="toggleSubmenu(item)">
                     <mat-icon>{{ item.icon }}</mat-icon>

@@ -1,0 +1,218 @@
+/* Dialog Container - Must use ::ng-deep to style Material Dialog */
+::ng-deep .role-dialog-container .mat-mdc-dialog-container {
+    background: white !important;
+    border-radius: 16px !important;
+    padding: 0 !important;
+}
+
+/* Dark theme support */
+[data-theme="dark"] ::ng-deep .role-dialog-container .mat-mdc-dialog-container {
+    background: #1e293b !important;
+}
+
+.role-dialog {
+    padding: 0;
+    min-width: 400px;
+    max-width: 500px;
+}
+
+/* Dialog Title Styling */
+h2[mat-dialog-title] {
+    margin: 0;
+    padding: 24px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Dark theme title */
+[data-theme="dark"] h2[mat-dialog-title] {
+    background: #0f172a;
+    color: #f1f5f9;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Light theme title */
+[data-theme="light"] h2[mat-dialog-title] {
+    color: #1f2937;
+}
+
+/* Dialog Content */
+mat-dialog-content {
+    padding: 24px !important;
+    margin: 0 !important;
+    max-height: 70vh !important;
+    overflow-y: auto;
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Form Fields */
+.full-width {
+    width: 100%;
+}
+
+::ng-deep mat-form-field {
+    width: 100%;
+}
+
+/* Form Field Background */
+::ng-deep .mat-mdc-text-field-wrapper {
+    background: white !important;
+}
+
+[data-theme="dark"] ::ng-deep .mat-mdc-text-field-wrapper {
+    background: rgba(30, 41, 59, 0.5) !important;
+}
+
+/* Input Fields */
+::ng-deep .mat-mdc-input-element {
+    color: #1f2937 !important;
+    font-weight: 500;
+}
+
+[data-theme="dark"] ::ng-deep .mat-mdc-input-element {
+    color: #f1f5f9 !important;
+}
+
+::ng-deep .mat-mdc-input-element::placeholder {
+    color: #6b7280 !important;
+    opacity: 0.7;
+}
+
+[data-theme="dark"] ::ng-deep .mat-mdc-input-element::placeholder {
+    color: #94a3b8 !important;
+}
+
+/* Labels */
+::ng-deep .mat-mdc-form-field-label {
+    color: #6b7280 !important;
+    font-weight: 500;
+}
+
+[data-theme="dark"] ::ng-deep .mat-mdc-form-field-label {
+    color: #94a3b8 !important;
+}
+
+::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-form-field-label {
+    color: #3b82f6 !important;
+}
+
+/* Outline borders */
+::ng-deep .mdc-notched-outline__leading,
+::ng-deep .mdc-notched-outline__notch,
+::ng-deep .mdc-notched-outline__trailing {
+    border-color: #d1d5db !important;
+}
+
+[data-theme="dark"] ::ng-deep .mdc-notched-outline__leading,
+[data-theme="dark"] ::ng-deep .mdc-notched-outline__notch,
+[data-theme="dark"] ::ng-deep .mdc-notched-outline__trailing {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
+::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
+    border-color: #3b82f6 !important;
+    border-width: 2px !important;
+}
+
+/* Error Messages */
+::ng-deep .mat-mdc-form-field-error {
+    color: #ef4444 !important;
+    font-size: 12px;
+}
+
+/* Dialog Actions */
+mat-dialog-actions {
+    padding: 16px 24px !important;
+    margin: 0 !important;
+    background: #f9fafb;
+    border-top: 1px solid #e5e7eb;
+    gap: 12px;
+}
+
+[data-theme="dark"] mat-dialog-actions {
+    background: #0f172a;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Cancel Button */
+::ng-deep button[mat-button] {
+    color: #6b7280;
+    font-weight: 500;
+    padding: 8px 20px;
+    border-radius: 6px;
+    min-width: 80px;
+}
+
+[data-theme="dark"] ::ng-deep button[mat-button] {
+    color: #94a3b8;
+}
+
+::ng-deep button[mat-button]:hover {
+    background: #f3f4f6 !important;
+}
+
+[data-theme="dark"] ::ng-deep button[mat-button]:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Primary Button (Create/Update) */
+::ng-deep button[mat-raised-button] {
+    background: #3b82f6 !important;
+    color: white !important;
+    font-weight: 500;
+    padding: 8px 24px;
+    border-radius: 6px;
+    min-width: 80px;
+    transition: all 0.3s ease;
+}
+
+::ng-deep button[mat-raised-button]:hover:not([disabled]) {
+    background: #2563eb !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+}
+
+::ng-deep button[mat-raised-button][disabled] {
+    background: #9ca3af !important;
+    color: #d1d5db !important;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* Textarea specific styling */
+::ng-deep textarea.mat-mdc-input-element {
+    resize: vertical;
+    min-height: 80px;
+    line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .role-dialog {
+        min-width: 300px;
+        max-width: 100%;
+    }
+    
+    h2[mat-dialog-title] {
+        font-size: 1.25rem;
+        padding: 20px;
+    }
+    
+    mat-dialog-content {
+        padding: 20px !important;
+    }
+    
+    mat-dialog-actions {
+        padding: 12px 20px !important;
+    }
+}

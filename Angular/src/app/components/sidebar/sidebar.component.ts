@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { filter } from 'rxjs/operators';
 import { MenuItem } from '../../models/user.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-sidebar',
@@ -28,18 +29,24 @@ export class SidebarComponent {
             children: [
                 { icon: 'person_add', label: 'Manage Users', route: '/team/users' },
                 { icon: 'admin_panel_settings', label: 'User Roles', route: '/team/roles' },
-                { icon: 'security', label: 'Permissions', route: '/team/permissions' }
+                { icon: 'security', label: 'Permissions', route: '/team/permissions' },
+                { icon: 'security', label: 'Manager roles', route: '/rolesManagement' }
             ]
         }
     ];
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private authService: AuthService) {
         this.router.events.pipe(
             filter(event => event instanceof NavigationEnd)
         ).subscribe((event: any) => {
             this.currentRoute = event.url;
             this.autoExpandActiveMenu();
+            this.isAdmin();
         });
+    }
+
+    isAdmin(): boolean {
+        return this.authService.isAdmin();
     }
 
     toggleSidebar() {
