@@ -30,7 +30,7 @@ export class SidebarComponent {
                 { icon: 'person_add', label: 'Manage Users', route: '/team/users' },
                 { icon: 'admin_panel_settings', label: 'User Roles', route: '/team/roles' },
                 { icon: 'security', label: 'Permissions', route: '/team/permissions' },
-                { icon: 'security', label: 'Manager roles', route: '/rolesManagement' }
+                { icon: 'badge', label: 'Manage Roles', route: '/rolesManagement' }
             ]
         }
     ];

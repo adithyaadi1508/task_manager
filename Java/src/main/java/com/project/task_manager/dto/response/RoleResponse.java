@@ -13,7 +13,7 @@ public class RoleResponse {
     private Long id;
     private String name;
     private String description;
-    private Integer userCount;
-    private Integer permissionCount;
+//    private Integer userCount;
+//    private Integer permissionCount;
     private Instant createdAt;
 }

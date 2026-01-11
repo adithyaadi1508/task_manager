@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -56,23 +57,31 @@ public class AuthServiceImpl implements AuthService {
         user.setLastName(request.getLastName());
         user.setPhone(request.getPhone());
 
-        final String roleName =
-                (request.getRole() == null || request.getRole().isBlank())
-                        ? RoleConstants.MEMBER
-                        : request.getRole();
+        // Handle multiple roles
+        Set<Role> userRoles = new HashSet<>();
 
-        Role role = roleRepository.findByName(roleName)
-                .orElseThrow(() -> new RuntimeException("Role not found: " + roleName));
+        if (request.getRoles() == null || request.getRoles().isEmpty()) {
+            // Default role if none provided
+            Role defaultRole = roleRepository.findByName(RoleConstants.MEMBER)
+                    .orElseThrow(() -> new RuntimeException("Default role not found: " + RoleConstants.MEMBER));
+            userRoles.add(defaultRole);
+        } else {
+            // Fetch all requested roles
+            for (String roleName : request.getRoles()) {
+                Role role = roleRepository.findByName(roleName)
+                        .orElseThrow(() -> new BadRequestException("Role not found: " + roleName));
+                userRoles.add(role);
+            }
+        }
 
-        user.setRoles(Set.of(role));
-
+        user.setRoles(userRoles);
         user.setIsActive(true);
         user.setIsVerified(false);
 
         // Save user
         User savedUser = userRepository.save(user);
 
-        // Generate token directly from user (cleaner, no re-authentication)
+        // Generate token
         String token = jwtTokenProvider.generateToken(savedUser);
 
         // Build response

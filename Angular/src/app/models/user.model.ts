@@ -27,7 +27,7 @@ export interface RegisterRequest {
   firstName: string;
   lastName: string;
   phone?: string;
-  role: string;
+  roles: string[];
 }
 
 export interface UserResponse {
@@ -51,6 +51,9 @@ export interface UserSimple {
   username: string;
   firstName: string;
   lastName: string;
+  email: string;
+  phone?: string;
+  roles?: string[];
 }
 
 export interface MenuItem {

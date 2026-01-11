@@ -8,7 +8,7 @@ import { Role } from '../models/user.model';
     providedIn: 'root'
 })
 export class RoleService {
-    private apiUrl = `${environment.apiUrl}/roles`;
+    private apiUrl = `${environment.apiUrl}/users/roles`;
 
     constructor(private http: HttpClient) { }
 
@@ -21,6 +21,7 @@ export class RoleService {
     }
 
     updateRole(id: number, role: { name: string; description: string }): Observable<Role> {
+
         return this.http.put<Role>(`${this.apiUrl}/${id}`, role);
     }
 

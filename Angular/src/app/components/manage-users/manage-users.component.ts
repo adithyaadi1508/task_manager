@@ -30,7 +30,7 @@ import { Router } from '@angular/router';
 })
 export class ManageUsersComponent implements OnInit {
     users: UserSimple[] = [];
-    displayedColumns: string[] = ['id', 'username', 'firstName', 'lastName', 'email', 'actions'];
+    displayedColumns: string[] = ['id', 'username', 'firstName', 'lastName', 'email', 'role', 'actions'];
     isLoading = true;
 
     constructor(
@@ -61,12 +61,27 @@ export class ManageUsersComponent implements OnInit {
     openAddUserDialog(): void {
         const dialogRef = this.dialog.open(AddUserDialogComponent, {
             width: '600px',
-            disableClose: false
+            disableClose: false,
+            data: { mode: 'add' }
         });
 
         dialogRef.afterClosed().subscribe(result => {
             if (result === 'success') {
                 this.loadUsers(); // Reload users after successful addition
+            }
+        });
+    }
+
+    openEditUserDialog(user: UserSimple): void {
+        const dialogRef = this.dialog.open(AddUserDialogComponent, {
+            width: '600px',
+            disableClose: false,
+            data: { mode: 'edit', user: user }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result === 'success') {
+                this.loadUsers(); // Reload users after successful update
             }
         });
     }

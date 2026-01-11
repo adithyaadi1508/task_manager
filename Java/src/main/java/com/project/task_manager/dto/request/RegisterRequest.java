@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,7 +25,6 @@ public class RegisterRequest {
     @Size(max = 100)
     private String email;
 
-    @NotBlank(message = "Password is required")
     @Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
 
@@ -38,7 +39,5 @@ public class RegisterRequest {
     @Size(max = 20)
     private String phone;
 
-    @NotBlank(message = "role is required")
-    @Size(max = 50)
-    private String role;
+    private Set<String> roles;
 }
