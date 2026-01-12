@@ -22,9 +22,12 @@ jobs:
     
     - name: Build with Maven
       run: mvn clean install
+      working-directory: ./Java
     
     - name: Run tests
       run: mvn test
+      working-directory: ./Java
     
     - name: Build JAR
       run: mvn package -DskipTests
+      working-directory: ./Java
