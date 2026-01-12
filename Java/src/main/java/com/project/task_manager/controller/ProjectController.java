@@ -115,20 +115,13 @@ public class ProjectController {
     }
 
     @DeleteMapping("/{projectId}/team/{userId}")
-    @DeleteApiResponses  // DELETE → 200, 404, 401
+    @DeleteApiResponses
     @Operation(summary = "Remove team member from project")
-    public ResponseEntity<?> removeTeamMember(
-            @Parameter(description = "Project ID", example = "1")
+    public ResponseEntity<Void> removeTeamMember(
             @PathVariable Long projectId,
-            @Parameter(description = "User ID to remove", example = "5")
             @PathVariable Long userId) {
-        try {
-            projectService.removeTeamMember(projectId, userId);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest()
-                    .body(Map.of("message", e.getMessage()));
-        }
+        projectService.removeTeamMember(projectId, userId);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{projectId}/team")

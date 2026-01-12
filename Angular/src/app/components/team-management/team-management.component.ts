@@ -10,6 +10,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { ProjectService } from '../../services/project.service';
 import { UserService } from '../../services/user.service';
+import { UserSimple } from '../../models/user.model';
 
 @Component({
   selector: 'app-team-management',
@@ -30,11 +31,10 @@ import { UserService } from '../../services/user.service';
 })
 export class TeamManagementComponent implements OnInit {
   teamMembers: any[] = [];
-  availableUsers: any[] = [];
+  availableUsers: UserSimple[] = [];
   selectedUserId: number | null = null;
   selectedRole: string = 'MEMBER';
-  
-roles = ['VIEWER', 'MEMBER', 'LEAD', 'MANAGER', 'ADMIN'];
+  selectedUserRoles: string[] = [];
 
   constructor(
     private projectService: ProjectService,
@@ -42,7 +42,7 @@ roles = ['VIEWER', 'MEMBER', 'LEAD', 'MANAGER', 'ADMIN'];
     private snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<TeamManagementComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { projectId: number }
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadTeamMembers();
@@ -64,7 +64,7 @@ roles = ['VIEWER', 'MEMBER', 'LEAD', 'MANAGER', 'ADMIN'];
     this.userService.getAllUsers().subscribe({
       next: (users) => {
         // Filter out users already in the team
-        this.availableUsers = users.filter(user => 
+        this.availableUsers = users.filter(user =>
           !this.teamMembers.some(member => member.id === user.id)
         );
       },
@@ -72,6 +72,21 @@ roles = ['VIEWER', 'MEMBER', 'LEAD', 'MANAGER', 'ADMIN'];
         console.error('Error loading users', error);
       }
     });
+  }
+
+  onUserSelect(event: any): void {
+    const userId = event.value;
+
+    // Reset role selection
+    this.selectedRole = null;
+    this.selectedUserRoles = [];
+
+    // Find selected user and get their roles
+    const selectedUser = this.availableUsers.find(user => user.id === userId);
+
+    if (selectedUser && selectedUser.roles) {
+      this.selectedUserRoles = selectedUser.roles;
+    }
   }
 
   addMember(): void {

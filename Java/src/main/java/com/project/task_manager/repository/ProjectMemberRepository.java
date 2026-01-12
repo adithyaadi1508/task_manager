@@ -7,7 +7,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import java.time.LocalDateTime;
+
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -24,11 +25,7 @@ public interface ProjectMemberRepository extends JpaRepository<ProjectMember, Pr
     void insertTeamMember(@Param("projectId") Long projectId,
                           @Param("userId") Long userId,
                           @Param("role") String role,
-                          @Param("joinedAt") LocalDateTime joinedAt);
-
-    @Modifying
-    @Query(value = "DELETE FROM admin_schema.project_members WHERE project_id = :projectId AND user_id = :userId", nativeQuery = true)
-    void deleteByProjectIdAndUserId(@Param("projectId") Long projectId, @Param("userId") Long userId);
+                          @Param("joinedAt") Date joinedAt);
 
     @Query(value = "SELECT * FROM admin_schema.project_members WHERE project_id = :projectId", nativeQuery = true)
     List<ProjectMember> findByProjectIdWithUsers(@Param("projectId") Long projectId);

@@ -9,11 +9,13 @@ import com.project.task_manager.exception.BadRequestException;
 import com.project.task_manager.exception.ResourceNotFoundException;
 import com.project.task_manager.model.Project;
 import com.project.task_manager.model.ProjectMember;
+import com.project.task_manager.model.ProjectMemberId;
 import com.project.task_manager.model.User;
 import com.project.task_manager.repository.ProjectMemberRepository;
 import com.project.task_manager.repository.ProjectRepository;
 import com.project.task_manager.repository.UserRepository;
 import com.project.task_manager.service.ProjectService;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +24,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +38,7 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
     private final ProjectMemberRepository projectMemberRepository;
+    private final EntityManager entityManager;
 
 
     @Override
@@ -207,17 +210,18 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         // Insert directly using native query
-        projectMemberRepository.insertTeamMember(projectId, userId, role, LocalDateTime.now());
+        projectMemberRepository.insertTeamMember(projectId, userId, role, new Date());
     }
 
     @Override
     @Transactional
     public void removeTeamMember(Long projectId, Long userId) {
-        Long count = projectMemberRepository.countByProjectIdAndUserId(projectId, userId);
-        if (count == 0) {
-            throw new ResourceNotFoundException("User is not a team member");
+        ProjectMember member = entityManager.find(ProjectMember.class, new ProjectMemberId(projectId,userId));
+        if (member == null) {
+            throw new ResourceNotFoundException("member not found with projectId: " + projectId +"and userId:" +userId);
         }
-        projectMemberRepository.deleteByProjectIdAndUserId(projectId, userId);
+        entityManager.remove(member);
+        entityManager.flush();
     }
 
 
