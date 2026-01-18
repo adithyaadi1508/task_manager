@@ -91,7 +91,7 @@ public class Task {
 
     @ManyToMany
     @JoinTable(
-            schema = "task_schema",
+            schema = "admin_schema",
             name = "task_tags",
             joinColumns = @JoinColumn(name = "task_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
