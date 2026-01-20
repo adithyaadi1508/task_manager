@@ -246,6 +246,8 @@ public class TaskServiceImpl implements TaskService {
             UserSummary assignee = new UserSummary();
             assignee.setId(task.getAssignedTo().getId());
             assignee.setUsername(task.getAssignedTo().getUsername());
+            assignee.setFirstName(task.getAssignedTo().getFirstName());
+            assignee.setLastName(task.getAssignedTo().getLastName());
             assignee.setEmail(task.getAssignedTo().getEmail());
             response.setAssignedTo(assignee);
         }

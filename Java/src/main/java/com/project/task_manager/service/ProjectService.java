@@ -12,6 +12,7 @@ public interface ProjectService {
     ProjectResponse createProject(ProjectRequest request);
     ProjectResponse getProjectById(Long id);
     List<ProjectResponse> getProjectsForCurrentUser();
+    List<ProjectResponse> getAllProjects();
     ProjectResponse updateProject(Long id, ProjectRequest request);
     void deleteProject(Long id);
     Page<ProjectResponse> getAllProjectsPaginated(Pageable pageable);

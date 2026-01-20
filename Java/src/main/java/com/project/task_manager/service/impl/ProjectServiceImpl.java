@@ -91,6 +91,16 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public List<ProjectResponse> getAllProjects() {
+        // Get all projects where user is owner
+        List<Project> projects = projectRepository.findAll();
+
+        return projects.stream()
+                .map(this::mapToProjectResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     @Transactional
     public ProjectResponse updateProject(Long id, ProjectRequest request) {
         Project project = projectRepository.findById(id)

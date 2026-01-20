@@ -10,9 +10,13 @@ import { Project, ProjectStats } from '../models/project.model';
 export class ProjectService {
   private apiUrl = `${environment.apiUrl}/projects`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAllProjects(): Observable<Project[]> {
+    return this.http.get<Project[]>(`${this.apiUrl}/allProjects`);
+  }
+
+  getCurrentUserProjects(): Observable<Project[]> {
     return this.http.get<Project[]>(`${this.apiUrl}/my-projects`);
   }
 

@@ -50,9 +50,18 @@ public class ProjectController {
 
     @GetMapping("/my-projects")
     @GetListApiResponses  // GET list → 200, 401
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'MEMBER')")
     @Operation(summary = "Get current user's projects")
     public ResponseEntity<List<ProjectResponse>> getMyProjects() {
         return ResponseEntity.ok(projectService.getProjectsForCurrentUser());
+    }
+
+    @GetMapping("/allProjects")
+    @GetListApiResponses  // GET list → 200, 401
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'MEMBER')")
+    @Operation(summary = "Get current user's projects")
+    public ResponseEntity<List<ProjectResponse>> getAllProjects() {
+        return ResponseEntity.ok(projectService.getAllProjects());
     }
 
     @PutMapping("/{id}")
