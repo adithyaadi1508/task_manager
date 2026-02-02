@@ -32,9 +32,7 @@ public class TaskDependency {
     @JoinColumn(name = "dependent_on_task_id", nullable = false)
     private Task dependentOnTask;
 
-    @ColumnDefault("'FINISH_TO_START'")
-    @Lob
-    @Column(name = "dependency_type")
+    @Column(name = "dependency_type", length = 50, columnDefinition = "VARCHAR(50) DEFAULT 'FINISH_TO_START'")
     private String dependencyType;
 
     @ColumnDefault("CURRENT_TIMESTAMP")

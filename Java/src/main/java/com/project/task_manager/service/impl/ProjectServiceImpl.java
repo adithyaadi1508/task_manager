@@ -180,6 +180,8 @@ public class ProjectServiceImpl implements ProjectService {
         // Map owner
         UserSummary ownerSummary = new UserSummary();
         ownerSummary.setId(project.getOwner().getId());
+        ownerSummary.setFirstName(project.getOwner().getFirstName());
+        ownerSummary.setLastName(project.getOwner().getLastName());
         ownerSummary.setUsername(project.getOwner().getUsername());
         ownerSummary.setEmail(project.getOwner().getEmail());
         response.setOwner(ownerSummary);

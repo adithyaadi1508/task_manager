@@ -78,14 +78,72 @@
         Due date is required
       </mat-error>
     </mat-form-field>
+    <div class="file-upload-section">
+      <div class="upload-header">
+        <h3>Attachments</h3>
+      </div>
+
+      <input 
+        type="file" 
+        #fileInput 
+        style="display: none" 
+        (change)="onFileSelected($event)"
+        accept=".pdf,.doc,.docx,.xlsx,.xls,.jpg,.jpeg,.png">
+      
+      <button 
+        mat-stroked-button 
+        color="primary" 
+        type="button"
+        (click)="fileInput.click()"
+        [disabled]="isUploading">
+        <mat-icon>attach_file</mat-icon>
+        Attach File
+      </button>
+      
+      <div *ngIf="selectedFile" class="selected-file">
+        <mat-icon [color]="'primary'">{{ getFileIcon(selectedFile.name) }}</mat-icon>
+        <div class="file-details">
+          <span class="file-name">{{ selectedFile.name }}</span>
+          <span class="file-size">{{ formatFileSize(selectedFile.size) }}</span>
+        </div>
+        <button mat-icon-button color="warn" type="button" (click)="removeSelectedFile()" [disabled]="isUploading">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+
+      <div class="file-info">
+        <mat-icon>info</mat-icon>
+        <span>Supported: PDF, DOC, XLSX, Images (Max 10MB)</span>
+      </div>
+    </div>
+
+    <!-- Existing Attachments -->
+    <div *ngIf="isEditMode && attachments.length > 0" class="existing-attachments">
+      <h3>Existing Attachments</h3>
+      <mat-list>
+        <mat-list-item *ngFor="let attachment of attachments">
+          <mat-icon matListItemIcon [color]="'primary'">{{ getFileIcon(attachment.fileName) }}</mat-icon>
+          <div matListItemTitle>{{ attachment.fileName }}</div>
+          <div matListItemLine>{{ formatFileSize(attachment.fileSize) }} • {{ attachment.uploadedAt | date:'short' }}</div>
+          <button mat-icon-button (click)="downloadAttachment(attachment)" matListItemMeta>
+            <mat-icon>download</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteAttachment(attachment)" matListItemMeta>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </div>
   </form>
 </mat-dialog-content>
 
+
 <mat-dialog-actions align="end">
-  <button mat-button (click)="onCancel()" [disabled]="loading">Cancel</button>
+  <button mat-button (click)="onCancel()" [disabled]="loading || isUploading">Cancel</button>
   <button mat-raised-button color="primary" 
           (click)="onSubmit()" 
-          [disabled]="taskForm.invalid || loading">
+          [disabled]="taskForm.invalid || loading || isUploading">
+    <mat-spinner *ngIf="isUploading" diameter="20" style="display: inline-block; margin-right: 8px;"></mat-spinner>
     {{ isEditMode ? 'Update' : 'Create' }}
   </button>
 </mat-dialog-actions>
